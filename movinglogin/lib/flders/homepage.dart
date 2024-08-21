@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movinglogin/flders/loginpage.dart';
 import 'package:movinglogin/flders/signup.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,33 +14,35 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: Colors.black,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Expanded(
-          child: Stack(
-          children: [
-            // Expanded(child: child)
-            // Image(image: AssetImage("./images/home.jpeg",)),
-            Container(
-               height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-              child: Image.asset("./images/home2.jpeg",fit: BoxFit.cover,),
-            )
-            ,
-            Positioned(
-              top: 600,
-              right:  190,
-              child: ElevatedButton(style: ButtonStyle(),
-                onPressed: () {
+          child: Column(
+            children: [
+              Container(),
+              Container(height: 100,
+              width: double.infinity,
+              alignment: Alignment.center,
+              child: Text("Welcome to Edu",style: TextStyle(color: Colors.white,fontSize: 30),),),
+
+              Container(child: Image.asset('./images/h.jpeg'),),
               
-            }, child: Text("  login button  "))), Positioned(
-              top: 650,
-              right: 190,
-              child: ElevatedButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SignupPage(),));
-            }, child: Text("  signup button  ")))
-          ],
-        ),)
+                ElevatedButton(style: ElevatedButton.styleFrom(shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>LoginPage(),));
+            },
+            child: Text(" signup button ")),
+
+SizedBox(height: 20,),
+              ElevatedButton(style: ElevatedButton.styleFrom(shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+                onPressed: () {
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => SignupPage(),));
+            },
+             child: Text("  login button  "))
+
+            ],
+          ))
       ),
     );
   }
