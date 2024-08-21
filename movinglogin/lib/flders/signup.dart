@@ -6,74 +6,65 @@ class SignupPage extends StatefulWidget {
   @override
   State<SignupPage> createState() => _SignupPageState();
 }
-
 class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
        body: Container(
-        color: Colors.black,
+        color: Colors.white,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Expanded(
-          child: Stack(
+        child: Column(
           children: [
-            // Expanded(child: child)
-            // Image(image: AssetImage("./images/home.jpeg",)),
-            Container(
-               height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-              child: Image.asset("./images/s.jpeg",fit: BoxFit.cover,),
-            )
-            ,
-            Positioned(
-              top: MediaQuery.of(context).size.height*.5,
-              right:  MediaQuery.of(context).size.width*.3,
-              child:  Container(
-                height: 20,width: 150,
-                color: Colors.white,
-                child: Expanded(child: TextField()),
-              )), 
-                 Positioned(
-                  top: MediaQuery.of(context).size.height*.5,
-                  right:  MediaQuery.of(context).size.width*.3,
-                  child: Container(
-                    height: 30,width: 200,
-                   decoration: BoxDecoration(
-                   color: const Color.fromARGB(255, 241, 165, 165),
-                    borderRadius: BorderRadius.circular(5)
-                   ),
-                    child: Expanded(child: TextField(decoration: InputDecoration(labelText:"username"),)),
-                  )), 
-              
-                  Positioned(
-                  top: MediaQuery.of(context).size.height*.6,
-                  right:  MediaQuery.of(context).size.width*.3,
-                  child: Expanded(
-                    child: Container(
-                    height: 30,width: 200,
-                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 241, 165, 165),
-                    borderRadius: BorderRadius.circular(5)
-                   ),
-                    child: Expanded(child: TextField(decoration: InputDecoration(labelText:"password"),)),
-                  ))), 
+             Container(height: 100,
+              width: double.infinity,
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(onPressed: () {
+                    Navigator.pop(context);
+                  }, icon: Icon(Icons.arrow_back)),
+                  Text("LOGIN",style: TextStyle(color: Colors.purple[900],fontSize: 25),),
+               Container(width: 50,)
+               ],
+              ),),
+                Container(
+                  child: Image.asset("./images/picture3.jpg",fit: BoxFit.cover,),
+                ),
+                    Container(
+                        height: 30,width: 200,
+                       decoration: BoxDecoration(
+                       color: Colors.purple[500],
+                        borderRadius: BorderRadius.circular(5)
+                       ),
+                        child: Expanded(child: TextField(
+                          decoration: InputDecoration(
+                            labelText:"UserName",),)),
+                      ),
+
+                      SizedBox(height: 10,),
+                      Container(
+                        height: 30,width: 200,
+                       decoration: BoxDecoration(
+                        color: Colors.purple[500],
+                        borderRadius: BorderRadius.circular(5)
+                       ),
+                        child: Expanded(child: TextField(decoration: InputDecoration(labelText:"password"),)),
+                      ),
+                      SizedBox(height: 20,),
+                      ElevatedButton(style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,backgroundColor: Colors.purple[900],
+                  shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                onPressed: () {
                   
-                 Positioned(
-                  top: MediaQuery.of(context).size.height*.7,
-                  left:  MediaQuery.of(context).size.width*.3,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2)),
-                    backgroundColor: Colors.blue,foregroundColor: Colors.white),
-                    onPressed: () {
-                    
-                  }, child: Text("Login"))
-                  )
+            },
+            child: Text(" signup button ")),
+             
           ],
         ),)
-      ),
+      
     );
   }
 }

@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.black,
+        color: Colors.white,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Expanded(
@@ -24,18 +24,23 @@ class _HomePageState extends State<HomePage> {
               Container(height: 100,
               width: double.infinity,
               alignment: Alignment.center,
-              child: Text("Welcome to Edu",style: TextStyle(color: Colors.white,fontSize: 30),),),
+              child: Text("Welcome to Edu",style: TextStyle(color: Colors.purple[900],fontSize: 30),),),
 
-              Container(child: Image.asset('./images/h.jpeg'),),
+              Container(child: Image.asset('./images/picture1.jpg'),),
               
-                ElevatedButton(style: ElevatedButton.styleFrom(shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,backgroundColor: Colors.purple[900],
+                    shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) =>LoginPage(),));
             },
             child: Text(" signup button ")),
 
 SizedBox(height: 20,),
-              ElevatedButton(style: ElevatedButton.styleFrom(shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+              ElevatedButton(style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,backgroundColor: Colors.purple[900],
+                shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
                 onPressed: () {
                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignupPage(),));
             },
