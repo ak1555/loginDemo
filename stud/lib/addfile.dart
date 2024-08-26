@@ -1,12 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class AddFile extends StatefulWidget {
   const AddFile({super.key});
-
   @override
   State<AddFile> createState() => _AddFileState();
 }
-
 class _AddFileState extends State<AddFile> {
   TextEditingController c1=TextEditingController();
   TextEditingController c2=TextEditingController();
@@ -16,6 +15,38 @@ class _AddFileState extends State<AddFile> {
   TextEditingController c6=TextEditingController();
   TextEditingController c7=TextEditingController();
   TextEditingController c8=TextEditingController();
+  void addd() async{
+final prefs= await SharedPreferences.getInstance();
+final res= prefs.getString("Todos");
+try{
+  List<dynamic> ls=json.decode(res!);
+Map<dynamic,dynamic>mp=
+  {"name":c1.text,
+  "age":c2.text,
+  "class":c3.text,
+  "id":c4.text,
+  "eng":c5.text,
+  "mal":c6.text,
+  "hin":c7.text,
+  };
+  ls.add(mp.toString());
+  prefs.setString("Todos", json.encode(ls));
+  print(ls);
+}
+catch(error){
+  List<Map<dynamic,dynamic>>lsmp=[{
+    "name":c1.text,
+  "age":c2.text,
+  "class":c3.text,
+  "id":c4.text,
+  "eng":c5.text,
+  "mal":c6.text,
+  "hin":c7.text,
+  }];
+  print(lsmp);
+  prefs.setString("Todos", json.encode(lsmp));
+}
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,7 +169,7 @@ SizedBox(width: 10),
         style: IconButton.styleFrom(backgroundColor: Colors.green,
         foregroundColor: Colors.white),
         onPressed: () {
-        
+        addd();
       }, icon: Icon(Icons.add,size: 40,)),
     );
   }

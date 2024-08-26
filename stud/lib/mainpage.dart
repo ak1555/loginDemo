@@ -12,21 +12,15 @@ class Mainpage extends StatefulWidget {
 }
 
 class _MainpageState extends State<Mainpage> {
-  bool cas = false;
+
   List<dynamic>ls =[];
-
-void add(){}
-
-  void ad() async{
+  
+  
+  void show() async{
  final prefs= await SharedPreferences.getInstance();
  final res=prefs.getString("Todos");
   ls=json.decode(res!);
-  if(ls==" "){
-cas=false;
-  }
-  else{
-    cas=true;
-  }
+  print(ls);
   }
  
 
@@ -44,9 +38,22 @@ cas=false;
         color: Colors.grey,
         child: Column(
           children: [
+            TextButton(onPressed: () {
+              show();
+            }, child: Text("REFREASH.")),
             Expanded(
               flex: 5,
-              child: Text("data")),
+              child: 
+              ListView.builder(
+                itemCount: ls.length,
+                itemBuilder: (context, index) {
+                return 
+                ListTile(
+                  leading: Text(index.toString()),
+                  title: Text(ls[index]),
+                );
+              },)
+              ),
               Expanded(
                 flex: 0,
                 child: Row(
@@ -59,7 +66,7 @@ cas=false;
                     style: IconButton.styleFrom(backgroundColor: Colors.green,iconSize: 35,
                     foregroundColor: Colors.white),
                     onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddFile(),));
+                      Navigator.pushNamed(context, "/addfile");
                   }, icon: Icon(Icons.add)),
                   )
                 ],

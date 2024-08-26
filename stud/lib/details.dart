@@ -75,7 +75,7 @@ class _DetailsState extends State<Details> {
         style: IconButton.styleFrom(padding: EdgeInsets.all(15),iconSize: 30,
         backgroundColor: Colors.green,foregroundColor: Colors.white),
         onPressed: () {
-        
+        // Navigator.pushReplacementNamed(context, )
       }, icon: Icon(Icons.edit)),
     );
   }
