@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class Details extends StatefulWidget {
@@ -8,8 +10,18 @@ class Details extends StatefulWidget {
 }
 
 class _DetailsState extends State<Details> {
+
+void showdetails(){
+
+}
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      final Map<dynamic,dynamic>msg=jsonDecode(ModalRoute.of(context)?.settings.arguments as String);
+    });
+    // final Map<dynamic,dynamic>msg=
+    // jsonDecode(ModalRoute.of(context)?.settings.arguments as String);
     return Scaffold(
       body: Container(
            height: MediaQuery.of(context).size.height,
@@ -65,6 +77,7 @@ class _DetailsState extends State<Details> {
                           Row( children: [
                       Text("HIN"),SizedBox(width: 10,),Text(":"),SizedBox(width: 10,),
                        Text("53")],),
+                       Text(msg["name"])
                        ],) ,)
               ],),
             )

@@ -15,12 +15,20 @@ class _MainpageState extends State<Mainpage> {
 
   List<dynamic>ls =[];
   
+  // void initState(){
+  //   super.initState();
+  //   show();
+  // }
   
   void show() async{
+    print("hi");
  final prefs= await SharedPreferences.getInstance();
  final res=prefs.getString("Todos");
-  ls=json.decode(res!);
-  print(ls);
+ setState(() {
+   ls=json.decode(res!);
+ });
+  
+  // print(ls[0]["name"]);
   }
  
 
@@ -40,17 +48,26 @@ class _MainpageState extends State<Mainpage> {
           children: [
             TextButton(onPressed: () {
               show();
+            //  Navigator.pushNamed(context,  "/details");
             }, child: Text("REFREASH.")),
             Expanded(
               flex: 5,
               child: 
               ListView.builder(
+                
                 itemCount: ls.length,
                 itemBuilder: (context, index) {
                 return 
                 ListTile(
+                  onTap: () {
+                    Map mp={
+                      "name":ls[index]["name"],
+
+                    };
+                  Navigator.pushReplacementNamed(context,  "/details",arguments: ls[index]);
+                  },
                   leading: Text(index.toString()),
-                  title: Text(ls[index]),
+                  title: Text(ls[0]["name"]),
                 );
               },)
               ),
