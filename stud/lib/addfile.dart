@@ -7,6 +7,7 @@ class AddFile extends StatefulWidget {
   State<AddFile> createState() => _AddFileState();
 }
 class _AddFileState extends State<AddFile> {
+
   TextEditingController c1=TextEditingController();
   TextEditingController c2=TextEditingController();
   TextEditingController c3=TextEditingController();
@@ -15,6 +16,7 @@ class _AddFileState extends State<AddFile> {
   TextEditingController c6=TextEditingController();
   TextEditingController c7=TextEditingController();
   TextEditingController c8=TextEditingController();
+  
   void addd() async{
 final prefs= await SharedPreferences.getInstance();
 final res= prefs.getString("Todos");

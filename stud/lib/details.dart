@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Details extends StatefulWidget {
   const Details({super.key});
@@ -17,12 +18,35 @@ void showdetails(){
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      final Map<dynamic,dynamic>msg=jsonDecode(ModalRoute.of(context)?.settings.arguments as String);
-    });
-    // final Map<dynamic,dynamic>msg=
-    // jsonDecode(ModalRoute.of(context)?.settings.arguments as String);
+
+
+String data=ModalRoute.of(context)?.settings.arguments as String;
+List<dynamic> ls=[];
+ int ind=int.parse(data);
+
+void p() async{
+final prefs=await SharedPreferences.getInstance();
+final res=prefs.getString("Todos");
+
+setState(() {
+ls=json.decode(res!);
+});
+
+print(ls);
+  print(ind);
+
+}
+void initState(){
+  super.initState();
+  p();
+}
+
     return Scaffold(
+      appBar: AppBar(
+        title: TextButton(onPressed: () {
+          p();
+        }, child: Text("refresh")),
+      ),
       body: Container(
            height: MediaQuery.of(context).size.height,
          width: MediaQuery.of(context).size.width,
@@ -47,7 +71,7 @@ void showdetails(){
                        Text("ABIN KRISHNA")],),
                       Row( children: [
                       Text("AGE"),SizedBox(width: 10,),Text(":"),SizedBox(width: 10,),
-                       Text("54")],),
+                       Text("20")],),
                           Row( children: [
                       Text("CLASS"),SizedBox(width: 10,),Text(":"),SizedBox(width: 10,),
                        Text("5346")],),
@@ -77,7 +101,7 @@ void showdetails(){
                           Row( children: [
                       Text("HIN"),SizedBox(width: 10,),Text(":"),SizedBox(width: 10,),
                        Text("53")],),
-                       Text(msg["name"])
+                      //  Text(ls[0].toString())
                        ],) ,)
               ],),
             )
@@ -88,7 +112,7 @@ void showdetails(){
         style: IconButton.styleFrom(padding: EdgeInsets.all(15),iconSize: 30,
         backgroundColor: Colors.green,foregroundColor: Colors.white),
         onPressed: () {
-        // Navigator.pushReplacementNamed(context, )
+        p();
       }, icon: Icon(Icons.edit)),
     );
   }

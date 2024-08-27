@@ -12,13 +12,16 @@ class Mainpage extends StatefulWidget {
 }
 
 class _MainpageState extends State<Mainpage> {
-
-  List<dynamic>ls =[];
-  
+  // @override
   // void initState(){
   //   super.initState();
   //   show();
   // }
+
+
+  List<dynamic>ls =[];
+  
+
   
   void show() async{
     print("hi");
@@ -60,14 +63,10 @@ class _MainpageState extends State<Mainpage> {
                 return 
                 ListTile(
                   onTap: () {
-                    Map mp={
-                      "name":ls[index]["name"],
-
-                    };
-                  Navigator.pushReplacementNamed(context,  "/details",arguments: ls[index]);
+                     Navigator.pushReplacementNamed(context, "/details", arguments: index.toString());
                   },
                   leading: Text(index.toString()),
-                  title: Text(ls[0]["name"]),
+                  title: Text(ls[index].toString()),
                 );
               },)
               ),
