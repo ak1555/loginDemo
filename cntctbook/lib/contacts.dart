@@ -11,19 +11,28 @@ class Contacts extends StatefulWidget {
 }
 
 class _ContactsState extends State<Contacts> {
+
 List ls=[];
 void cncts() async{
   final prefs=await SharedPreferences.getInstance();
-  final res=prefs.getString("ContactBook");
+  final res=prefs.getString("contactbook");
   // print(res);
+  print(res);
+  print("hii");
 
-  setState((){
+ try{
+  setState(() {
     ls=jsonDecode(res!);
   });
+        
+ }catch(e){
+  print(e);
+  print("empty res");
+ }
+  
+
 print(ls);
-
 }
-
  void initState(){
     super.initState();
     cncts();
@@ -41,9 +50,9 @@ print(ls);
         // alignment: Alignment.center,
         padding: EdgeInsets.all(50),
         child: ListView.builder(
-          itemCount: 10,
+          itemCount: ls.length,
           itemBuilder: (context, index) {
-            return Text("asd");
+            return Text(ls[index]["fname"]);
           },),
       ),
       floatingActionButton: IconButton( 

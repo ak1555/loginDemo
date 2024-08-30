@@ -9,66 +9,55 @@ class AddFile extends StatefulWidget {
   State<AddFile> createState() => _AddFileState();
 }
 class _AddFileState extends State<AddFile> {
+
   TextEditingController c1=TextEditingController();
   TextEditingController c2=TextEditingController();
   TextEditingController c3=TextEditingController();
   TextEditingController c4=TextEditingController();
   bool image=false;
   File? _image;
-final ImagePicker _picker = ImagePicker();
+List <dynamic> ls=[];
+    final ImagePicker _picker=ImagePicker();
+    void pickimage() async{
+      final pickedfile= await _picker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        _image=File(pickedfile!.path);
+         image=true;
+      });
+      image=true;
+    }
 
-void pickimage() async{
-  final PickedFile=await _picker.pickImage(source: ImageSource.gallery);
-  if(PickedFile!=null){
-  setState(() {
-    _image=File(PickedFile!.path);
-  });}
-  image=true;
-}
+    Future<void> saceData() async{
+      final prefs=await SharedPreferences.getInstance();
+      final res=prefs.getString("contactbook");
 
- Future<void> addd() async{
-final prefs= await SharedPreferences.getInstance();
-final res= prefs.getString("ContactBook");
-final bytes=_image!.readAsBytes();
-final base64img=base64Encode(bytes as List<int>);
-
-try{
-  List<dynamic> ls=json.decode(res!);
-  Map<dynamic,dynamic>mp={
-    "fname":c1.text,
-    "lname":c2.text,
-    "email":c3.text,
-    "number":c4.text,
-    // "photo":base64img+
-  };
-  ls.add(mp);
-  prefs.setString("ContactBook", json.encode(ls));
-  print(mp);
-}
-catch(error){
-  List<Map<dynamic,dynamic>>lsmp=[{
-    "fname":c1.text,
-  "lname":c2.text,
-  "email":c3.text,
-  "number":c4.text,
-  // "photo":base64img
-  }];
-  print(lsmp);
-  prefs.setString("ContactBook", json.encode(lsmp));
-}
-
-
-c1.clear();
-c2.clear();
-c3.clear();
-c4.clear();
-  }
-
-
-  // void initState(){
-  //   super.initState();
-  //   addd();
-  // }
+      final bytes=await _image!.readAsBytes();
+      final base64img=base64Encode(bytes);
+     
+      if(res != null){
+        ls=jsonDecode(res!);
+        ls.add({
+          "fname":c1.text,
+          "lname":c2.text,
+          "email":c3.text,
+          "phone":c4.text,
+          "photo":base64img,
+        });
+        prefs.setString("contactbook", jsonEncode(ls));
+      }
+      else{
+        ls=[
+          {
+          "fname":c1.text,
+          "lname":c2.text,
+          "email":c3.text,
+          "phone":c4.text,
+          "photo":base64img,
+        }
+        ];
+         prefs.setString("contactbook", jsonEncode(ls));
+      }
+    }
 
 
   @override
@@ -180,7 +169,7 @@ c4.clear();
         padding: EdgeInsets.fromLTRB(20, 22, 20, 22)
         ),
         onPressed: () {
-        addd();
+        saceData();
       }, child:Text("Add Contact")),
     );
   }
