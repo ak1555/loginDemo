@@ -33,11 +33,13 @@ void cncts() async{
 
 print(ls);
 }
- void initState(){
+
+@override
+  void initState() {
+    // TODO: implement initState
     super.initState();
     cncts();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,11 +50,29 @@ print(ls);
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         // alignment: Alignment.center,
-        padding: EdgeInsets.all(50),
+        padding: EdgeInsets.only(left: 30,right: 30,top:40,bottom: 10 ),
         child: ListView.builder(
           itemCount: ls.length,
           itemBuilder: (context, index) {
-            return Text(ls[index]["fname"]);
+            return ListTile(
+              onTap: () {
+                Navigator.pushNamed(context,"/detail",arguments: index.toString() );
+              },
+              title: Column(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row( 
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(ls[index]["fname"],style: TextStyle(fontSize: 19)),
+                      Text(" "),Text(ls[index]["lname"],style: TextStyle(fontSize: 19))],),
+                Text(ls[index]["phone"],style: TextStyle(fontSize: 14),)
+                ],
+              ),
+              trailing: Icon(Icons.call,color: Colors.green,),
+            );
           },),
       ),
       floatingActionButton: IconButton( 

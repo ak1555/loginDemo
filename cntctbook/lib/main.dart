@@ -1,5 +1,7 @@
 import 'package:cntctbook/addfile.dart';
 import 'package:cntctbook/contacts.dart';
+import 'package:cntctbook/detail.dart';
+import 'package:cntctbook/editfile.dart';
 import 'package:flutter/material.dart';
 
 void main(){
@@ -10,7 +12,9 @@ void main(){
     routes: {
 
       "/addfile":(context)=>AddFile(),
-      "/contacts":(context)=>Contacts()
+      "/contacts":(context)=>Contacts(),
+      "/detail":(context)=>Detail(),
+      "/editfile":(context)=>EditFile()
     },
   ));
 }
