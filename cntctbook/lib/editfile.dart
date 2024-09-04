@@ -17,6 +17,7 @@ class _EditFileState extends State<EditFile> {
   TextEditingController c4=TextEditingController();
 
   File? _image;
+  bool img=false;
   Uint8List? _inputimage;
   int? indexnumber;
 List <dynamic> ls=[];
@@ -26,7 +27,7 @@ List <dynamic> ls=[];
       final pickedfile= await _picker.pickImage(source: ImageSource.gallery);
       setState(() {
         _image=File(pickedfile!.path);
-        
+        img=true;
       });
       // image=true;
     }
@@ -48,25 +49,10 @@ print(res);
         c3.text=ls[indexnumber!]["email"];
         c4.text=ls[indexnumber!]["phone"];
 
-        //    _inputimage=base64Decode(ls[indexnumber!]["photo"]);
-      });
-// if()
-
-       Map mp={
-          "fname":c1.text,
-          "lname":c2.text,
-          "email":c3.text,
-          "phone":c4.text,
-          // "photo":base64img,
-        };
-        ls[indexnumber!]=mp;
-             prefs.setString("contactbook", jsonEncode(ls));
+          //  _inputimage=base64Decode(ls[indexnumber!]["photo"]);
+      });    
       }
-      c1.clear();
-      c2.clear();
-      c3.clear();
-      c4.clear();
-    
+      
     }
 
   @override
@@ -76,18 +62,63 @@ print(res);
     saceData();
   }
 
+
+  Future<void> AddData() async{
+      final prefs=await SharedPreferences.getInstance();
+      final res=prefs.getString("contactbook");
+
+      final bytes=await _image!.readAsBytes();
+      final base64img=base64Encode(bytes);
+     Map mp;
+      if(res != null){
+        ls=jsonDecode(res!);
+        mp={
+          "fname":c1.text,
+          "lname":c2.text,
+          "email":c3.text,
+          "phone":c4.text,
+          "photo":base64img!,
+        };
+        ls[indexnumber!]= mp;
+        print(ls);
+        prefs.setString("contactbook", jsonEncode(ls));
+      }
+      else{
+          mp={
+          "fname":c1.text,
+          "lname":c2.text,
+          "email":c3.text,
+          "phone":c4.text,
+          "photo":base64img!,
+        };
+        ls[indexnumber!]= mp;
+        print(ls);
+        prefs.setString("contactbook", jsonEncode(ls));
+      }
+      c1.clear();
+      c2.clear();
+      c3.clear();
+      c4.clear();
+      // setState(() {
+      //     _image=null;
+      // });
+    
+    }
+
+
   @override
   Widget build(BuildContext context) {
     indexnumber=int.parse(ModalRoute.of(context)?.settings.arguments as String);
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text("Add Contact",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 25),),),
+      appBar: AppBar(backgroundColor: Colors.black,
+        title: Center(child: Text("Edit Contact",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 25,color: Colors.white),),),
       ),
       body: ListView(
         children: [
         Container(
                 height: MediaQuery.of(context).size.height,
            width: MediaQuery.of(context).size.width,
+           color: Colors.black,
            padding: EdgeInsets.all(50),
            child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,15 +127,21 @@ print(res);
               Container(
                 height: 150,
                 width: 150,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                   color: Colors.grey[200],
                 ),
-                child:GestureDetector(
+                child:
+                GestureDetector(
                   onTap: () {
                     pickimage();
                   },
                   // child: Image.memory(_inputimage!),
+                  // child:img?Image.file(_image!,fit: BoxFit.cover,)
+                  // :Text("Set New Image")
+                    child:img ? ClipOval(child: Image.file(_image!,fit: BoxFit.cover,height: 150,width: 150,),)
+                :Text("Set New Image")
                 )
               ),
               // _______
@@ -115,7 +152,7 @@ print(res);
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text("FName",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1),),
+                  Text("FName",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1,color: Colors.white),),
                   SizedBox(height: 2),
                   Expanded(flex: 0, child: TextField(
                     controller: c1,
@@ -132,7 +169,7 @@ print(res);
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text("Lname",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1),),
+                  Text("Lname",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1,color: Colors.white),),
                   SizedBox(height: 2),
                   Expanded(flex: 0, child: TextField(
                      keyboardType: TextInputType.name,
@@ -148,7 +185,7 @@ print(res);
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text("Email",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1),),
+                  Text("Email",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1,color: Colors.white),),
                   SizedBox(height: 2),
                   Expanded(flex: 0, child: TextField(
                      keyboardType: TextInputType.emailAddress,
@@ -164,7 +201,7 @@ print(res);
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text("Number",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1),),
+                  Text("Number",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1,color: Colors.white),),
                   SizedBox(height: 2),
                   Expanded(flex: 0, child: TextField(
                      keyboardType: TextInputType.number,
@@ -181,13 +218,29 @@ print(res);
         ),]
       ),
       floatingActionButton: TextButton(
-        style: TextButton.styleFrom(backgroundColor: Colors.green,
+        style: TextButton.styleFrom(backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         padding: EdgeInsets.fromLTRB(20, 22, 20, 22)
         ),
         onPressed: () {
-        saceData();
-      }, child:Text("Add Contact")),
+        if (_image!=null){
+           AddData();
+           Navigator.pop(context);
+          }
+          else{
+            showDialog(context: context, builder: (context) {
+             return AlertDialog(
+                title: Text("Sorry!!!"),
+                content: Text("Image is mandotory.."),
+                actions: [
+                  TextButton(onPressed: () {
+                    Navigator.pop(context);
+                  }, child: Text("OK"))
+                ],
+              );
+            },);
+          }
+      }, child:Text("Save")),
     );
   }
 }

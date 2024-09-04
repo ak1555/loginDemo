@@ -8,7 +8,8 @@ void main(){
   runApp(MaterialApp(
     // home: Mainpage(),
     // home: Details(),
-    initialRoute: "/contacts",
+    // initialRoute: "/detail",
+     initialRoute: "/contacts",
     routes: {
 
       "/addfile":(context)=>AddFile(),

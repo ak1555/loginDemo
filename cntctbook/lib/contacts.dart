@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +12,7 @@ class Contacts extends StatefulWidget {
 }
 
 class _ContactsState extends State<Contacts> {
-
+Uint8List? _image;
 List ls=[];
 void cncts() async{
   final prefs=await SharedPreferences.getInstance();
@@ -23,6 +24,7 @@ void cncts() async{
  try{
   setState(() {
     ls=jsonDecode(res!);
+    // _image=base64Decode();
   });
         
  }catch(e){
@@ -44,34 +46,90 @@ print(ls);
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("CONTACTS"),),
+        backgroundColor: Colors.black,
+        title: Center(child: Text("CONTACTS",style: TextStyle(color: Colors.white),),),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
+        color: Colors.black,
         // alignment: Alignment.center,
-        padding: EdgeInsets.only(left: 30,right: 30,top:40,bottom: 10 ),
+        padding: EdgeInsets.only(left: 15,right: 15,top:40,bottom: 10 ),
         child: ListView.builder(
           itemCount: ls.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              onTap: () {
-                Navigator.pushNamed(context,"/detail",arguments: index.toString() );
-              },
-              title: Column(
-                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row( 
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(ls[index]["fname"],style: TextStyle(fontSize: 19)),
-                      Text(" "),Text(ls[index]["lname"],style: TextStyle(fontSize: 19))],),
-                Text(ls[index]["phone"],style: TextStyle(fontSize: 14),)
-                ],
+            return Container(
+              height: 80,
+              width: double.infinity,
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(top: 5,bottom: 5),
+              decoration: BoxDecoration(
+                
+                border: Border.all(color: Colors.grey,width: 1),
+                borderRadius: BorderRadius.circular(100),
               ),
-              trailing: Icon(Icons.call,color: Colors.green,),
+              child: ListTile(
+                onTap: () {
+                  Navigator.pushNamed(context,"/detail",arguments: index.toString() );
+                },
+                leading: Container(
+                  height: 45,
+                  width: 45,
+                  decoration: BoxDecoration(color: Colors.grey,
+                  borderRadius: BorderRadius.circular(100)),
+                  child: ClipRRect(
+                    child: Image.memory(_image=base64Decode(ls![index]["photo"]),fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(100),
+                  )
+                ),
+                title: Column(
+                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      // height: 30,
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(height: 15,),
+                              Row( 
+                                mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              
+                                children: [
+                                  Text(ls[index]["fname"],style: TextStyle(fontSize: 17.5,color: Colors.white)),
+                                  Text(" "),Text(ls[index]["lname"],style: TextStyle(fontSize: 17.5,color: Colors.white))],),
+                            ],
+                          ),
+                          // SizedBox(width: 50,),
+                           Container(
+                  width: 60,
+                  // height: 50,
+                  alignment: Alignment.bottomCenter,
+                  child: Row(children: [
+                    // Container(
+                    //   height: 35,width: 35,
+                    //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),
+                    //   color: Colors.grey[300]),
+                      // child:
+                       Icon(Icons.message,color: Colors.blue,),
+                      // ),
+                      SizedBox(width: 8,),
+                  Icon(Icons.call,color: Colors.green,)],),
+                ),
+                        ],
+                      ),
+                    ),
+                  Text(ls[index]["phone"],style: TextStyle(fontSize: 12,color: Colors.white),)
+                  ],
+                ),
+                // trailing:
+                // Icon(Icons.call,color: Colors.green,),
+                
+              ),
             );
           },),
       ),

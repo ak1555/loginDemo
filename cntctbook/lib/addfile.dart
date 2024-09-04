@@ -41,7 +41,7 @@ List <dynamic> ls=[];
           "lname":c2.text,
           "email":c3.text,
           "phone":c4.text,
-          "photo":base64img,
+          "photo":base64img!,
         });
         print(ls);
         prefs.setString("contactbook", jsonEncode(ls));
@@ -53,7 +53,7 @@ List <dynamic> ls=[];
           "lname":c2.text,
           "email":c3.text,
           "phone":c4.text,
-          "photo":base64img,
+          "photo":base64img!,
         }
         ];
            print(ls);
@@ -74,13 +74,15 @@ List <dynamic> ls=[];
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Add Contact",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 25),),),
+        backgroundColor: Colors.black,
+        title: Center(child: Text("Add Contact",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 25,color: Colors.white),),),
       ),
       body: ListView(
         children: [
         Container(
                 height: MediaQuery.of(context).size.height,
            width: MediaQuery.of(context).size.width,
+           color: Colors.black,
            padding: EdgeInsets.all(50),
            child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,7 +109,7 @@ List <dynamic> ls=[];
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text("FName",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1),),
+                  Text("FName",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1,color: Colors.white),),
                   SizedBox(height: 2),
                   Expanded(flex: 0, child: TextField(
                     controller: c1,
@@ -125,7 +127,7 @@ List <dynamic> ls=[];
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text("Lname",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1),),
+                  Text("Lname",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1,color: Colors.white),),
                   SizedBox(height: 2),
                   Expanded(flex: 0, child: TextField(
                      keyboardType: TextInputType.name,
@@ -141,7 +143,7 @@ List <dynamic> ls=[];
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text("Email",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1),),
+                  Text("Email",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1,color: Colors.white),),
                   SizedBox(height: 2),
                   Expanded(flex: 0, child: TextField(
                      keyboardType: TextInputType.emailAddress,
@@ -157,7 +159,7 @@ List <dynamic> ls=[];
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text("Number",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1),),
+                  Text("Number",style: TextStyle(fontWeight: FontWeight.w500,letterSpacing: 1,color: Colors.white),),
                   SizedBox(height: 2),
                   Expanded(flex: 0, child: TextField(
                      keyboardType: TextInputType.number,
@@ -179,7 +181,25 @@ List <dynamic> ls=[];
         padding: EdgeInsets.fromLTRB(20, 22, 20, 22)
         ),
         onPressed: () {
-        saceData();
+
+          if (_image!=null){
+             saceData();
+             Navigator.pop(context);
+          }
+          else{
+            showDialog(context: context, builder: (context) {
+             return AlertDialog(
+                title: Text("Sorry!!!"),
+                content: Text("Image is mandotory.."),
+                actions: [
+                  TextButton(onPressed: () {
+                    Navigator.pop(context);
+                  }, child: Text("OK"))
+                ],
+              );
+            },);
+          }
+      
       }, child:Text("Add Contact")),
     );
   }
