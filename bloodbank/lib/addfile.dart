@@ -1,5 +1,10 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:ffi';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
 class AddFile extends StatefulWidget {
   const AddFile({super.key});
 
@@ -8,6 +13,102 @@ class AddFile extends StatefulWidget {
 }
 
 class _AddFileState extends State<AddFile> {
+TextEditingController c1= TextEditingController();
+TextEditingController c2= TextEditingController();
+TextEditingController c3= TextEditingController();
+TextEditingController c4= TextEditingController();
+TextEditingController c5= TextEditingController();
+ImagePicker _picker=ImagePicker();
+File? _image;
+
+List sharedprefslist=[];
+Map<dynamic,dynamic> mp={};
+
+
+void pickimage() async{
+final pickedfile=await _picker.pickImage(source: ImageSource.gallery);
+setState(() {
+  _image=File(pickedfile!.path);
+});
+}
+
+Future< void >savedata()async{
+  final prefs=await SharedPreferences.getInstance();
+  final res=prefs.getString("bloodbank");
+
+  final bytes=await _image!.readAsBytes();
+  final base64img=base64Encode(bytes);
+  if(res!=null){
+    sharedprefslist=json.decode(res);
+    
+     try{
+ mp={
+        "name":c1.text,
+        "email":c2.text,
+        "phone":c3.text,
+        "place":c4.text,
+        "dob":c5.text,
+        "image":base64img
+      };
+     }catch(e){
+ mp={
+        "name":c1.text,
+        "email":c2.text,
+        "phone":c3.text,
+        "place":c4.text,
+        "dob":c5.text,
+        "image":null
+      };
+     }
+      sharedprefslist.add(mp);
+      prefs.setString("bloodbank", jsonEncode(sharedprefslist));
+    
+  }else{
+     try{
+ mp={
+        "name":c1.text,
+        "email":c2.text,
+        "phone":c3.text,
+        "place":c4.text,
+        "dob":c5.text,
+        "image":base64img
+      };
+     }catch(e){
+ mp={
+        "name":c1.text,
+        "email":c2.text,
+        "phone":c3.text,
+        "place":c4.text,
+        "dob":c5.text,
+        "image":null
+      };
+     }
+      sharedprefslist.add(mp);
+      prefs.setString("bloodbank", jsonEncode(sharedprefslist));
+    
+  }
+}
+
+
+
+ String? seletedgroup;
+
+final List<String>ls=[
+  "O+",
+  "O-",
+  "A+",
+  "A-",
+  "B+",
+  "B-",
+  "AB+",
+  "AB-",
+  "A+",
+  "A-",
+  "B+",
+  "B-",
+];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +120,7 @@ class _AddFileState extends State<AddFile> {
           children: [
             Container(
               height: 220,
-              color: Colors.white,
+              color: const Color.fromARGB(255, 172, 13, 13),
               width: double.infinity,
               child: Column(
                 children: [
@@ -31,6 +132,7 @@ class _AddFileState extends State<AddFile> {
                     height: 110,
                     width: double.infinity,
                    decoration: BoxDecoration(
+               
                     color: Colors.red,
                     borderRadius: BorderRadiusDirectional.vertical(bottom: Radius.circular(100))
                    ),child: ClipRRect(borderRadius: BorderRadius.vertical(bottom: Radius.circular(50)),
@@ -65,8 +167,9 @@ class _AddFileState extends State<AddFile> {
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(border: Border.all(),
-                    borderRadius: BorderRadius.circular(15),),
+                    borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
+                      controller: c1,
                        keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                         hintText: "FullName",
@@ -90,8 +193,9 @@ class _AddFileState extends State<AddFile> {
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(border: Border.all(),
-                    borderRadius: BorderRadius.circular(15),),
+                    borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
+                      controller: c2,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         hintText: "Email",
@@ -115,8 +219,9 @@ class _AddFileState extends State<AddFile> {
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(border: Border.all(),
-                    borderRadius: BorderRadius.circular(15),),
+                    borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
+                      controller: c3,
                        keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "ContactNumber",
@@ -140,8 +245,9 @@ class _AddFileState extends State<AddFile> {
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(border: Border.all(),
-                    borderRadius: BorderRadius.circular(15),),
+                    borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
+                      controller: c4,
                        keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         hintText: "Place,District",
@@ -165,8 +271,9 @@ class _AddFileState extends State<AddFile> {
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(border: Border.all(),
-                    borderRadius: BorderRadius.circular(15),),
+                    borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
+                      controller: c5,
                        keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "dd-mm-yyyy",
@@ -185,21 +292,59 @@ class _AddFileState extends State<AddFile> {
                   ),
                    Container(
                     height: 50,
-                    // width: double.infinity,
+                    width: double.infinity,
                     margin: EdgeInsets.only(left: 20,right: 20),
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(border: Border.all(),
-                    borderRadius: BorderRadius.circular(15),),
-                    child: Expanded(child: Expanded(child: TextField(
-                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: "sjj",
-                        border: InputBorder.none,
-                        hoverColor: Colors.red
-                      ),
-                    ))),
+                    borderRadius: BorderRadius.circular(10),),
+                    child:
+ Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+   children: [
+     Text(seletedgroup==null?'enter a blood group':'$seletedgroup'),
+    //  SizedBox(width: 90,),
+     DropdownButton(
+      underline: Container(height: 0,),
+      items: ls.map(
+      (String bloodgrp){
+        return DropdownMenuItem(
+          value: bloodgrp,
+          child: Text(bloodgrp),);
+      }
+     ).toList(),
+     onChanged: (value) {
+      setState(() {
+        seletedgroup=value;
+      });
+     },),
+    
+   ],
+ )
+,
                   ),
+                    // ---------------------------------- blood group ^
+                    SizedBox(height: 25,),
+                    Container(
+                      child: Center(
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
+                            backgroundColor: const Color.fromARGB(255, 172, 13, 13),
+                            foregroundColor: Colors.white,
+                            side: BorderSide(width: 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),elevation: 10,overlayColor: Colors.blue,
+
+                            
+                          ),
+                          onPressed: () {
+                          savedata();
+                        }, child: Text("  SUBMIT  ")),
+                      ),
+                    ),
+                    SizedBox(height: 25,),
 
                     // ================================================ padding containers end
           ],
