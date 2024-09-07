@@ -132,16 +132,26 @@ final List<String>ls=[
                     height: 110,
                     width: double.infinity,
                    decoration: BoxDecoration(
-               
+                boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 224, 86, 86),
+                        blurRadius: 10,
+                        spreadRadius: 1,
+                        blurStyle: BlurStyle.inner,
+                      )
+                    ],
                     color: Colors.red,
                     borderRadius: BorderRadiusDirectional.vertical(bottom: Radius.circular(100))
-                   ),child: ClipRRect(borderRadius: BorderRadius.vertical(bottom: Radius.circular(50)),
+                   ),child: ClipRRect(borderRadius: BorderRadius.vertical(bottom: Radius.circular(50),),
                     child: Image.asset("./images/redimg.jpeg",fit: BoxFit.fill,)),
                   ),
 
                       Positioned(top: 40,left: 110,
                         child:Container(height: 140,width: 140,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),color: const Color.fromARGB(255, 46, 44, 44)),)),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[400]),
+                      
+                      )),
                       
                     ],
                   ),
@@ -166,7 +176,15 @@ final List<String>ls=[
                     margin: EdgeInsets.only(left: 20,right: 20),
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(border: Border.all(),
+                    decoration: BoxDecoration(border: Border.all(width: .1),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                        spreadRadius: 1,
+                        blurStyle: BlurStyle.outer,
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
                       controller: c1,
@@ -192,7 +210,15 @@ final List<String>ls=[
                     margin: EdgeInsets.only(left: 20,right: 20),
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(border: Border.all(),
+                    decoration: BoxDecoration(border: Border.all(width: .1),
+                     boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                        spreadRadius: 1,
+                        blurStyle: BlurStyle.outer,
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
                       controller: c2,
@@ -218,7 +244,15 @@ final List<String>ls=[
                     margin: EdgeInsets.only(left: 20,right: 20),
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(border: Border.all(),
+                    decoration: BoxDecoration(border: Border.all(width: .1),
+                     boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                        spreadRadius: 1,
+                        blurStyle: BlurStyle.outer,
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
                       controller: c3,
@@ -244,7 +278,15 @@ final List<String>ls=[
                     margin: EdgeInsets.only(left: 20,right: 20),
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(border: Border.all(),
+                    decoration: BoxDecoration(border: Border.all(width: .1),
+                     boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                        spreadRadius: 1,
+                        blurStyle: BlurStyle.outer,
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
                       controller: c4,
@@ -257,12 +299,192 @@ final List<String>ls=[
                     ))),
                   ),
                    // ---------------------------------- place ^
-                    Container(
+                
+                      Row(
+                        children: [
+                          Column(
+                            children: [
+                              Container(
+                                                  height: 50,
+                                                  width: 130,
+                                                  margin: EdgeInsets.only(left: 20),
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text("Blood Group"),
+                                                ),
+                                                 Container(
+                                                  height: 50,
+                                                  width: 130,
+                                                  margin: EdgeInsets.only(left: 20,right: 20),
+                                                  padding: EdgeInsets.only(left: 15,right: 15),
+                                                  alignment: Alignment.centerLeft,
+                                                  decoration: BoxDecoration(border: Border.all(width: .1),
+                                                   boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 10,
+                                spreadRadius: 0,
+                                blurStyle: BlurStyle.outer,
+                              )
+                                                  ],
+                                                  borderRadius: BorderRadius.circular(10),),
+                                                  child:
+                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: [
+                                   Text(seletedgroup==null?'Group':'$seletedgroup'),
+                                  //  SizedBox(width: 90,),
+                                   DropdownButton(
+                                    underline: Container(height: 0,),
+                                    items: ls.map(
+                                    (String bloodgrp){
+                                      return DropdownMenuItem(
+                                        value: bloodgrp,
+                                        child: Text(bloodgrp),);
+                                    }
+                                   ).toList(),
+                                   onChanged: (value) {
+                                    setState(() {
+                                      seletedgroup=value;
+                                    });
+                                   },),
+                                  
+                                 ],
+                               )
+                              ,
+                                                ),
+                            ],
+                          ),
+
+ Column(
+   children: [
+     Container(
+                        height: 50,
+                        width: 150,
+                        margin: EdgeInsets.only(left: 20),
+                        alignment: Alignment.centerLeft,
+                        child: Text("Date of Birth"),
+                      ),
+                       Container(
+                        height: 50,
+                        width: 150,
+                        margin: EdgeInsets.only(left: 20,right: 20),
+                        padding: EdgeInsets.only(left: 15,right: 15),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(border: Border.all(width: .1),
+                         boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 10,
+                            spreadRadius: 1,
+                            blurStyle: BlurStyle.outer,
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(10),),
+                        child: Expanded(child: Expanded(child: TextField(
+                          controller: c5,
+                           keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: "dd-mm-yy",
+                            border: InputBorder.none,
+                            hoverColor: Colors.red
+                          ),
+                        ))),
+                      ),
+   ],
+ ),
+
+                        ],
+                      ),
+// =========================================>>
+SizedBox(height: 3),
+Row(
+  children: [
+    Column(
+       children: [
+         Container(
+                            height: 40,
+                            width: 130,
+                            margin: EdgeInsets.only(left: 20),
+                            alignment: Alignment.centerLeft,
+                            child: Text("Weight"),
+                          ),
+                           Container(
+                            height: 50,
+                            width: 130,
+                            margin: EdgeInsets.only(left: 20,right: 20),
+                            padding: EdgeInsets.only(left: 15,right: 15),
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(border: Border.all(width: .1),
+                             boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 10,
+                                spreadRadius: 1,
+                                blurStyle: BlurStyle.outer,
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(10),),
+                            child: Expanded(child: Expanded(child: TextField(
+                              controller: c5,
+                               keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: "Weight",
+                                border: InputBorder.none,
+                                hoverColor: Colors.red
+                              ),
+                            ))),
+                          ),
+       ],
+     ),
+     Column(
+       children: [
+         Container(
+                            height: 40,
+                            width: 130,
+                            margin: EdgeInsets.only(left: 20),
+                            alignment: Alignment.centerLeft,
+                            child: Text("Age"),
+                          ),
+                           Container(
+                            height: 50,
+                            width: 130,
+                            margin: EdgeInsets.only(left: 20,right: 20),
+                            padding: EdgeInsets.only(left: 15,right: 15),
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(border: Border.all(width: .1),
+                             boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 10,
+                                spreadRadius: 1,
+                                blurStyle: BlurStyle.outer,
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(10),),
+                            child: Expanded(child: Expanded(child: TextField(
+                              controller: c5,
+                               keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: "age",
+                                border: InputBorder.none,
+                                hoverColor: Colors.red
+                              ),
+                            ))),
+                          ),
+       ],
+     ),
+  ],
+),
+
+
+
+                    // ---------------------------------- blood group ^
+                        Container(
                     height: 50,
                     // width: double.infinity,
                     margin: EdgeInsets.only(left: 20),
                     alignment: Alignment.centerLeft,
-                    child: Text("Date of Birth"),
+                    child: Text("Location"),
                   ),
                    Container(
                     height: 50,
@@ -270,60 +492,27 @@ final List<String>ls=[
                     margin: EdgeInsets.only(left: 20,right: 20),
                     padding: EdgeInsets.only(left: 15,right: 15),
                     alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(border: Border.all(),
+                    decoration: BoxDecoration(border: Border.all(width: .1),
+                     boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                        spreadRadius: 1,
+                        blurStyle: BlurStyle.outer,
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
                       controller: c5,
                        keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        hintText: "dd-mm-yyyy",
+                        hintText: "location",
                         border: InputBorder.none,
                         hoverColor: Colors.red
                       ),
                     ))),
                   ),
                     // ---------------------------------- DOB ^
-                      Container(
-                    height: 50,
-                    // width: double.infinity,
-                    margin: EdgeInsets.only(left: 20),
-                    alignment: Alignment.centerLeft,
-                    child: Text("Blood Group"),
-                  ),
-                   Container(
-                    height: 50,
-                    width: double.infinity,
-                    margin: EdgeInsets.only(left: 20,right: 20),
-                    padding: EdgeInsets.only(left: 15,right: 15),
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),),
-                    child:
- Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-   children: [
-     Text(seletedgroup==null?'enter a blood group':'$seletedgroup'),
-    //  SizedBox(width: 90,),
-     DropdownButton(
-      underline: Container(height: 0,),
-      items: ls.map(
-      (String bloodgrp){
-        return DropdownMenuItem(
-          value: bloodgrp,
-          child: Text(bloodgrp),);
-      }
-     ).toList(),
-     onChanged: (value) {
-      setState(() {
-        seletedgroup=value;
-      });
-     },),
-    
-   ],
- )
-,
-                  ),
-                    // ---------------------------------- blood group ^
                     SizedBox(height: 25,),
                     Container(
                       child: Center(

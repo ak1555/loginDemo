@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 void main(){
   runApp(
     MaterialApp(
+      // initialRoute: "/addfile",
       initialRoute: "/homepage",
       routes: {
         "/details":(context)=>Details(),
