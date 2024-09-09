@@ -8,7 +8,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool a=false;
+   bool b=false;
+    bool c=false;
+     bool d=false;
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    a;
+    b;
+    c;
+    d;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +39,10 @@ class _HomePageState extends State<HomePage> {
                   color: const Color.fromARGB(255, 211, 12, 12),
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(50))
                 ),
-            child: Center(child: Image.asset("./images/bld.jpeg",height: 300,),),
+            child: Center(child: Image.asset("./images/bld.jpeg",width: 250,),),
             ),
               SizedBox(height: 15,),
-            Container(child: Center(child: Text("Pick Yourblood group",style: TextStyle(fontFamily: "olf"),))),
+            Container(child: Center(child: Text("Commonly Used Bloods",style: TextStyle(fontFamily: "olf"),))),
             SizedBox(height: 15,),
             // -------------------------------------------------------- row 1
             Row(
@@ -44,11 +57,15 @@ class _HomePageState extends State<HomePage> {
                     )]
                   ),
                 child: Card(
-                   color: Colors.red[900],
-                   child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900],
+                   color:a? Colors.red[900]:const Color.fromARGB(255, 253, 136, 128),
+                   child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor:a? Colors.red[900]:const Color.fromARGB(255, 253, 136, 128),
                    shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(10))
                    ),
-                    onPressed: (){},
+                    onPressed: (){
+                    setState(() {
+                        a=!a;
+                    });
+                    },
                      child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [Text("A+",style: TextStyle(color: Colors.white,fontSize: 22),),
@@ -69,14 +86,18 @@ class _HomePageState extends State<HomePage> {
                     )]
                   ),
                 child: Card(
-                   color: Colors.red[900],
-                   child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900],
+                   color:b? Colors.red[900]:const Color.fromARGB(255, 253, 136, 128),
+                   child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: b? Colors.red[900]:const Color.fromARGB(255, 253, 136, 128),
                    shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(10))
                    ),
-                    onPressed: (){},
+                    onPressed: (){
+                     setState(() {
+                        b=!b;
+                     });
+                    },
                      child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Text("A-",style: TextStyle(color: Colors.white,fontSize: 22),),
+                      children: [Text("B+",style: TextStyle(color: Colors.white,fontSize: 22),),
                       SizedBox(width: 5,),
                       Icon(Icons.water_drop_outlined,color: Colors.white,size: 30,)],
                      ),
@@ -105,11 +126,13 @@ class _HomePageState extends State<HomePage> {
                     )]
                   ),
                 child: Card(
-                   color: Colors.red[900],
-                   child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900],
+                   color:c? Colors.red[900]:const Color.fromARGB(255, 253, 136, 128),
+                   child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor:c? Colors.red[900]:const Color.fromARGB(255, 253, 136, 128),
                    shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(10))
                    ),
-                    onPressed: (){},
+                    onPressed: (){setState(() {
+                      c=!c;
+                    });},
                      child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [Text("O+",style: TextStyle(color: Colors.white,fontSize: 22),),
@@ -130,14 +153,16 @@ class _HomePageState extends State<HomePage> {
                     )]
                   ),
                 child: Card(
-                   color: Colors.red[900],
-                   child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900],
+                   color:d ? Colors.red[900]:const Color.fromARGB(255, 253, 136, 128),
+                   child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor:d? Colors.red[900]:const Color.fromARGB(255, 253, 136, 128),
                    shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(10))
                    ),
-                    onPressed: (){},
+                    onPressed: (){setState(() {
+                      d=!d;
+                    });},
                      child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Text("O-",style: TextStyle(color: Colors.white,fontSize: 22),),
+                      children: [Text("AB+",style: TextStyle(color: Colors.white,fontSize: 22),),
                       SizedBox(width: 5,),
                       Icon(Icons.water_drop_outlined,color: Colors.white,size: 30,)],
                      ),
@@ -161,10 +186,13 @@ class _HomePageState extends State<HomePage> {
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(onTap: () {
-                          
+                          // ontap
                         },
-                          child: Text("Search for your Group",style: TextStyle(
-                            color: Colors.white,fontSize: 20),)
+                          child: TextButton(onPressed: () {
+                            
+                          }
+                          , child:  Text("Search for your Group",style: TextStyle(
+                            color: Colors.white,fontSize: 20),))
                             ),
 
                         IconButton(onPressed: () {
@@ -172,9 +200,131 @@ class _HomePageState extends State<HomePage> {
                         }, icon: Icon(Icons.menu,size: 33,color: Colors.white,))
                       ],
                     ),
-                   )
+                   ),
+
+                   SizedBox(height: 20,),
            
-              
+              Container(
+                height: 300,
+                width: double.infinity,
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.only(left: 15,right: 15),
+              decoration: BoxDecoration(
+                      color: Colors.red[800],
+                      borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
+                    childAspectRatio: 01.19,crossAxisSpacing: 5,mainAxisSpacing: 10),
+                    children: [
+                      Card(
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("Are You Donate?"),
+                            Container(height: 33,
+                              child: Center(
+                              child: TextButton(onPressed: () {
+                                Navigator.pushNamed(context, "/addfile");
+                              }, child: Text("DONATE",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 8,right: 8),
+                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.asset("./images/bld_donation.jpeg",height: 50,),
+                                  Icon(Icons.water_drop,color: Colors.red,)
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      ),
+                      // ==================================== card 2 v
+                      Card(
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("Insurance Enquiry"),
+                            Container(height: 33,
+                              child: Center(
+                              child: TextButton(onPressed: () {
+                                
+                              }, child: Text("ENQUIRY",style: TextStyle(color: Colors.red,fontWeight: FontWeight.w600),)),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 8,right: 8),
+                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.asset("./images/insu.jpeg",height: 50,),
+                                  Icon(Icons.playlist_add_check_circle_outlined,color: Colors.red,)
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      ),
+                      // =============================================== card 3 v
+                       Card(
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("Apperance"),
+                            Container(height: 33,
+                              child: Center(
+                              child: TextButton(onPressed: () {
+                                
+                              }, child: Text("APPERANCES",style: TextStyle(color: Colors.red,fontWeight: FontWeight.w600),)),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 8,right: 8),
+                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.asset("./images/apperence.jpeg",height: 50,),
+                                  Icon(Icons.vignette_sharp,color: Colors.red,)
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      ),
+                      
+
+                      Card(
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("Hospitality"),
+                            Container(height: 33,
+                              child: Center(
+                              child: TextButton(onPressed: () {
+                                
+                              }, child: Text("CHECK",style: TextStyle(color: Colors.red,fontWeight: FontWeight.w600),)),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 8,right: 8),
+                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.asset("./images/hospitality.jpeg",height: 50,),
+                                  Icon(Icons.local_hospital,color: Colors.red,)
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      ),
+                    ],
+                    ),
+              ),
+
+              SizedBox(height: 25,)
             
           ],
         ),

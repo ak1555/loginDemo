@@ -18,8 +18,12 @@ TextEditingController c2= TextEditingController();
 TextEditingController c3= TextEditingController();
 TextEditingController c4= TextEditingController();
 TextEditingController c5= TextEditingController();
+TextEditingController c6= TextEditingController();
+TextEditingController c7= TextEditingController();
+TextEditingController c8= TextEditingController();
 ImagePicker _picker=ImagePicker();
 File? _image;
+bool img=false;
 
 List sharedprefslist=[];
 Map<dynamic,dynamic> mp={};
@@ -29,7 +33,9 @@ void pickimage() async{
 final pickedfile=await _picker.pickImage(source: ImageSource.gallery);
 setState(() {
   _image=File(pickedfile!.path);
+  img=true;
 });
+img=true;
 }
 
 Future< void >savedata()async{
@@ -149,8 +155,14 @@ final List<String>ls=[
                       Positioned(top: 40,left: 110,
                         child:Container(height: 140,width: 140,
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),
-                      color: Colors.grey[400]),
-                      
+                      color: Colors.grey[400]
+                      ),
+                      child: GestureDetector(
+                        onTap: pickimage,
+                       child: img?ClipOval(child:  Image.file(_image!)):IconButton(onPressed: () {
+                        pickimage();
+                      }, icon: Icon(Icons.perm_identity_outlined,size: 125,)),
+                      )
                       )),
                       
                     ],
@@ -425,7 +437,7 @@ Row(
                             ],
                             borderRadius: BorderRadius.circular(10),),
                             child: Expanded(child: Expanded(child: TextField(
-                              controller: c5,
+                              controller: c6,
                                keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 hintText: "Weight",
@@ -462,7 +474,7 @@ Row(
                             ],
                             borderRadius: BorderRadius.circular(10),),
                             child: Expanded(child: Expanded(child: TextField(
-                              controller: c5,
+                              controller: c7,
                                keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 hintText: "age",
@@ -503,7 +515,7 @@ Row(
                     ],
                     borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
-                      controller: c5,
+                      controller: c8,
                        keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "location",
@@ -529,7 +541,56 @@ Row(
                             
                           ),
                           onPressed: () {
-                          savedata();
+                            int agee=int.parse(c7.text);
+                             int weii=int.parse(c6.text);
+                              if(agee>=18){
+                               
+                                if(_image!=null){
+                                  if(weii>=45){
+                                    // save
+                                  }else{
+                                     showDialog(context: context, builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("OOPS!!!"),
+                                    content: Text("Your Weight Is Too LOW...."),
+                                    actions: [
+                                      TextButton(onPressed: () {
+                                        Navigator.pop(context);
+                                      }, child: Text("OK"))
+                                    ],
+                                  );
+                                },);
+                                  }
+                                }else{
+                                  showDialog(context: context, builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("SORRY!!!"),
+                                    content: Text("Image Is Mandotory...."),
+                                    actions: [
+                                      TextButton(onPressed: () {
+                                        Navigator.pop(context);
+                                      }, child: Text("OK"))
+                                    ],
+                                  );
+                                },);
+                                }
+
+                              }else{
+                                showDialog(context: context, builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("OOPS!!!"),
+                                    content: Text("You Must Above 18.."),
+                                    actions: [
+                                      TextButton(onPressed: () {
+                                        Navigator.pop(context);
+                                      }, child: Text("OK"))
+                                    ],
+                                  );
+                                },);
+                              }
+
+
+                          // savedata();
                         }, child: Text("  SUBMIT  ")),
                       ),
                     ),
