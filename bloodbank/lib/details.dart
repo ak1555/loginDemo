@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Details extends StatefulWidget {
   const Details({super.key});
@@ -8,6 +12,28 @@ class Details extends StatefulWidget {
 }
 
 class _DetailsState extends State<Details> {
+Uint8List? _image;
+List ls = [];
+
+void detail() async{
+final prefs=await SharedPreferences.getInstance();
+final res=prefs.getString("bloodbank");
+if(res!=null){
+ setState(() {
+    ls=json.decode(res);
+ });
+}
+print(ls);
+}
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    detail();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +47,7 @@ class _DetailsState extends State<Details> {
         )],
         title: Center(child: Text("DETAILS")),
         leading: IconButton(onPressed: () {
-          
+          Navigator.pop(context);
         }, icon: Icon(Icons.arrow_back)),
       ),
       
@@ -80,11 +106,71 @@ class _DetailsState extends State<Details> {
                 ],
               ),
             ),
-            // ListView.builder(itemCount: 10,
-            //   itemBuilder: (context, index) {
-              
-            // },
-            // )
+
+            SizedBox(height: 10,),
+
+            Container(
+              width: double.infinity,   
+              height: 550,
+              // color: Colors.red,
+              child: ListView.builder(itemCount: ls.length,
+                itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.only(top: 5,bottom: 5,left: 15,right: 15),
+                  padding: EdgeInsets.only(left: 15),
+                  height: 120,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                     color: const Color.fromARGB(255, 250, 181, 176),
+                  ),
+                 
+                  child: Row(
+                    children: [
+                       Container(
+                        height: 100,
+                        width: 100,
+                         child: ClipRRect(
+                                             child: Image.memory(_image=base64Decode(ls![index]["image"]),fit: BoxFit.cover),
+                                             borderRadius: BorderRadius.circular(15),
+                                           ),
+                       ),
+                       SizedBox(width: 10,),
+
+                       Container(
+                        height: 100,
+                        width: 130,
+                        
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(ls[index]["name"].toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,letterSpacing:.0),)
+                          ,SizedBox(height: 10,)
+                           ,Text(ls[index]["place"],style: TextStyle(fontWeight: FontWeight.w600),)
+                           ,SizedBox(height: 5,)
+                            ,Text(ls[index]["phone"],style: TextStyle(fontWeight: FontWeight.w500),)
+                          ],
+                        ),
+                       ),
+
+                       Container(
+                        height: 100,
+                        width: 55,
+                        child: Column(children: [
+                          Container(width: 50,height: 50,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),color: Colors.red[600]),
+                          child: Center(child: Text(ls[index]["group"],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,
+                          color: Colors.white,shadows: [Shadow(color: const Color.fromARGB(255, 255, 255, 255),blurRadius: 5,offset: Offset(1, 1))]),),),
+                          
+                          )
+                        ],),
+                       )
+                    ],
+                  ),
+                );
+              },
+              ),
+            )
           ],
         ),
       ),

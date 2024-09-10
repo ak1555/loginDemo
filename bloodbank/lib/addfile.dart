@@ -21,10 +21,28 @@ TextEditingController c5= TextEditingController();
 TextEditingController c6= TextEditingController();
 TextEditingController c7= TextEditingController();
 TextEditingController c8= TextEditingController();
+final List<String>ls=[
+  "O+",
+  "O-",
+  "A+",
+  "A-",
+  "B+",
+  "B-",
+  "AB+",
+  "AB-",
+  "A+",
+  "A-",
+  "B+",
+  "B-",
+];
+ String? seletedgroup;
+
+
 ImagePicker _picker=ImagePicker();
 File? _image;
 bool img=false;
 
+bool chkbx=false;
 List sharedprefslist=[];
 Map<dynamic,dynamic> mp={};
 
@@ -54,6 +72,7 @@ Future< void >savedata()async{
         "phone":c3.text,
         "place":c4.text,
         "dob":c5.text,
+        "group":seletedgroup.toString(),
         "image":base64img
       };
      }catch(e){
@@ -63,6 +82,7 @@ Future< void >savedata()async{
         "phone":c3.text,
         "place":c4.text,
         "dob":c5.text,
+         "group":seletedgroup.toString(),
         "image":null
       };
      }
@@ -77,6 +97,7 @@ Future< void >savedata()async{
         "phone":c3.text,
         "place":c4.text,
         "dob":c5.text,
+         "group":seletedgroup.toString(),
         "image":base64img
       };
      }catch(e){
@@ -86,6 +107,7 @@ Future< void >savedata()async{
         "phone":c3.text,
         "place":c4.text,
         "dob":c5.text,
+         "group":seletedgroup.toString(),
         "image":null
       };
      }
@@ -93,26 +115,14 @@ Future< void >savedata()async{
       prefs.setString("bloodbank", jsonEncode(sharedprefslist));
     
   }
+  
 }
 
 
 
- String? seletedgroup;
 
-final List<String>ls=[
-  "O+",
-  "O-",
-  "A+",
-  "A-",
-  "B+",
-  "B-",
-  "AB+",
-  "AB-",
-  "A+",
-  "A-",
-  "B+",
-  "B-",
-];
+
+
 
 
   @override
@@ -159,7 +169,7 @@ final List<String>ls=[
                       ),
                       child: GestureDetector(
                         onTap: pickimage,
-                       child: img?ClipOval(child:  Image.file(_image!)):IconButton(onPressed: () {
+                       child: img?ClipOval(child:  Image.file(_image!,fit: BoxFit.cover,)):IconButton(onPressed: () {
                         pickimage();
                       }, icon: Icon(Icons.perm_identity_outlined,size: 125,)),
                       )
@@ -516,7 +526,7 @@ Row(
                     borderRadius: BorderRadius.circular(10),),
                     child: Expanded(child: Expanded(child: TextField(
                       controller: c8,
-                       keyboardType: TextInputType.number,
+                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         hintText: "location",
                         border: InputBorder.none,
@@ -525,6 +535,19 @@ Row(
                     ))),
                   ),
                     // ---------------------------------- DOB ^
+                    // =================================== checkbox v
+                    SizedBox(height: 10,),
+                    Row(
+                      children: [
+                        SizedBox(width: 5,),
+                        Checkbox(value:chkbx , onChanged: (value) {
+                          setState(() {
+                            chkbx=true;
+                          });
+                        },),
+                        Text("I Accept the Terms & conditions ")
+                      ],
+                    ),
                     SizedBox(height: 25,),
                     Container(
                       child: Center(
@@ -543,16 +566,32 @@ Row(
                           onPressed: () {
                             int agee=int.parse(c7.text);
                              int weii=int.parse(c6.text);
+                              if(chkbx==true){
                               if(agee>=18){
-                               
+                              
                                 if(_image!=null){
                                   if(weii>=45){
-                                    // save
+                                    if(c1.text!=null&&c2.text!=null){
+                                        savedata();
+                                        Navigator.pop(context);
+                                    }else{
+                                      showDialog(context: context, builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("OOPS!!!"),
+                                    content: Text("All Input Fields Must Want to Fill...."),
+                                    actions: [
+                                      TextButton(onPressed: () {
+                                        Navigator.pop(context);
+                                      }, child: Text("OK"))
+                                    ],
+                                  );
+                                },);
+                                    }
                                   }else{
                                      showDialog(context: context, builder: (context) {
                                   return AlertDialog(
                                     title: Text("OOPS!!!"),
-                                    content: Text("Your Weight Is Too LOW...."),
+                                    content: Text("Your Weight Is Too LESS...."),
                                     actions: [
                                       TextButton(onPressed: () {
                                         Navigator.pop(context);
@@ -580,6 +619,19 @@ Row(
                                   return AlertDialog(
                                     title: Text("OOPS!!!"),
                                     content: Text("You Must Above 18.."),
+                                    actions: [
+                                      TextButton(onPressed: () {
+                                        Navigator.pop(context);
+                                      }, child: Text("OK"))
+                                    ],
+                                  );
+                                },);
+                              }}
+                              else{
+                                 showDialog(context: context, builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("OOPS!!!"),
+                                    content: Text("You Must Agree the Terms & Conditions..."),
                                     actions: [
                                       TextButton(onPressed: () {
                                         Navigator.pop(context);

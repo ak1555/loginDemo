@@ -17,10 +17,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    a;
-    b;
-    c;
-    d;
+    a=false;
+    b=false;
+    c=false;
+    d=false;
   }
 
   @override
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                   color: const Color.fromARGB(255, 211, 12, 12),
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(50))
                 ),
-            child: Center(child: Image.asset("./images/bld.jpeg",width: 250,),),
+            child: Center(child: Image.asset("./images/bld.jpeg",width: 230,),),
             ),
               SizedBox(height: 15,),
             Container(child: Center(child: Text("Commonly Used Bloods",style: TextStyle(fontFamily: "olf"),))),
@@ -64,6 +64,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: (){
                     setState(() {
                         a=!a;
+                          Navigator.pushNamed(context, "/details1",arguments: "A+" );
                     });
                     },
                      child: Row(
@@ -93,6 +94,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: (){
                      setState(() {
                         b=!b;
+                          Navigator.pushNamed(context, "/details1",arguments: "B+" );
                      });
                     },
                      child: Row(
@@ -132,6 +134,7 @@ class _HomePageState extends State<HomePage> {
                    ),
                     onPressed: (){setState(() {
                       c=!c;
+                      Navigator.pushNamed(context, "/details1",arguments: "O+" );
                     });},
                      child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -159,6 +162,7 @@ class _HomePageState extends State<HomePage> {
                    ),
                     onPressed: (){setState(() {
                       d=!d;
+                        Navigator.pushNamed(context, "/details1",arguments: "AB+" );
                     });},
                      child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -187,16 +191,17 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         GestureDetector(onTap: () {
                           // ontap
+                           Navigator.pushNamed(context, "/details");
                         },
                           child: TextButton(onPressed: () {
-                            
+                             Navigator.pushNamed(context, "/details");
                           }
                           , child:  Text("Search for your Group",style: TextStyle(
                             color: Colors.white,fontSize: 20),))
                             ),
 
                         IconButton(onPressed: () {
-                          
+                          Navigator.pushNamed(context, "/details");
                         }, icon: Icon(Icons.menu,size: 33,color: Colors.white,))
                       ],
                     ),
