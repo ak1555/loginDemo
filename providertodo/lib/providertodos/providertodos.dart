@@ -11,8 +11,9 @@ notifyListeners();
 print(todolist);
 }
 
-void edit(indexx){
-
+void edit(data,s){
+todolist[s]=data;
+notifyListeners();
 }
 
 void delete(indexx){

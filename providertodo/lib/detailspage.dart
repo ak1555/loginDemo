@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:providertodo/editpage.dart';
 import 'package:providertodo/providertodos/providertodos.dart';
 
 class DetailsPage extends StatefulWidget {
@@ -9,7 +8,6 @@ class DetailsPage extends StatefulWidget {
   @override
   State<DetailsPage> createState() => _DetailsPageState();
 }
-
 class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
@@ -47,14 +45,20 @@ class _DetailsPageState extends State<DetailsPage> {
               onLongPress: () {
                 showDialog(context: context, builder: (context) {
                   return AlertDialog(
-                    title: Text("Menu..."),
+                    title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Menu..."),
+                        IconButton(onPressed: () {
+                          Navigator.pop(context);
+                        }, icon: Icon(Icons.arrow_back))
+                      ],
+                    ),                    
                     content: Text("Choose from Options."),
                     actions: [
                       TextButton(onPressed: () {
                         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>EditPage() ,));
-                        Navigator.pushNamed(context, "/edit",arguments: index);
+                        Navigator.pushNamed(context, "/edit",arguments: index.toString());                         
                       }, child: Text("EDIT")),
-
                       TextButton(onPressed: () {
                         value.delete(index);
                         Navigator.pop(context);

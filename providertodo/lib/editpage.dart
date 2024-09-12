@@ -11,23 +11,40 @@ class EditPage extends StatefulWidget {
 
 class _EditPageState extends State<EditPage> {
   TextEditingController _controller = TextEditingController();
-// int? s;
+// bool f = false;
+// List? ls=[];
+int? s;
+var data;
+@override
+void add(dataa){
+  print(dataa);
+  _controller.text=dataa;
+}
 
-// @override
-// void add(){
-//   _controller=;
+// void demo(){
+//   if(ls==null){
+//     showDialog(context: context, builder: (context) {
+//       return AlertDialog(
+//         title: Text("Are You Sure"),
+//         content: Text("Are you want to EDIT"),
+//         actions: [TextButton(onPressed: () {
+//           add(data);
+//         }, child: Text("OK"))],
+//       );
+//     },);
+//   }
 // }
 
 //   void initState() {
 //     // TODO: implement initState
 //     super.initState();
-// add();
+// demo();
 //   }
 
   @override
   Widget build(BuildContext context) {
     int s= int.parse( ModalRoute.of(context)?.settings.arguments as String);
-
+      // data=ModalRoute.of(context)?.settings.arguments as String;
 
 
 
@@ -37,50 +54,70 @@ class _EditPageState extends State<EditPage> {
               height: 55,
               width: double.infinity,
               padding: EdgeInsets.only(left: 15,right: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
                 children: [
-                  Container(
-                    height: 55,
-                    width: 215,
-                    alignment: Alignment.bottomCenter,
-                    padding: EdgeInsets.only(left: 15),
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 0),
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                    child: Expanded(child: TextField(
-                      controller: _controller=value.todolist[s],
-                      decoration: InputDecoration(
-                        hintText: "Add....",
-                        border: InputBorder.none),
-                    )),
+                  // Container(height: 10,width: 10,
+                  // child: Expanded(child: ListView.builder(itemBuilder: (context, index) {
+                  //   return Text(ls![index].toString(),style: TextStyle(color: Colors.white),);
+                  // },)),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      
+                      Container(
+                        height: 55,
+                        width: 215,
+                        alignment: Alignment.bottomCenter,
+                        padding: EdgeInsets.only(left: 15),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 0),
+                          borderRadius: BorderRadius.circular(13),
+                        ),
+                        child: Expanded(child: TextField(
+                        
+                                  // controller: _controller=value.todolist[s],
+                          controller: _controller,
+                          
+                          decoration: InputDecoration(
+                            
+                            hintText: "data",
+                            border: InputBorder.none),
+                        ),),
+                      ),
+                      TextButton(style: TextButton.styleFrom(
+                        backgroundColor: Colors.limeAccent,
+                        foregroundColor: Colors.red[800],
+                        padding: EdgeInsets.fromLTRB(25, 19, 25, 19),
+                        side: BorderSide(color: Colors.black,width: 1)
+                      ),
+                        onPressed: () {
+                         
+                        var data=_controller.text;
+                        if(_controller.text!=""){
+                           value.edit(data,s);
+                           _controller.clear();
+                          // add(dataa);
+                        }else{
+                          showDialog(context: context, builder: (context) {
+                          return  AlertDialog(
+                            title: Text("OOPS!!!!"),
+                            content: Text("The Input Field Is Empty"),
+                            actions: [TextButton(onPressed: () {
+                              Navigator.pop(context);
+                            }, child: Text("OK"))],
+                            );
+                          },);
+                        }
+                      // value.addtodo(data);
+                      }, child: Text("ADD",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)),
+                  
+                      IconButton(onPressed: () {
+                         var dataa=value.todolist[s];
+                        add(dataa);
+                      }, icon: Icon(Icons.refresh))
+                    ],
                   ),
-                  TextButton(style: TextButton.styleFrom(
-                    backgroundColor: Colors.limeAccent,
-                    foregroundColor: Colors.red[800],
-                    padding: EdgeInsets.fromLTRB(25, 19, 25, 19),
-                    side: BorderSide(color: Colors.black,width: 1)
-                  ),
-                    onPressed: () {
-                    var data=_controller.text;
-                    if(_controller.text!=""){
-                       value.addtodo(data);
-                       _controller.clear();
-                    }else{
-                      showDialog(context: context, builder: (context) {
-                      return  AlertDialog(
-                        title: Text("OOPS!!!!"),
-                        content: Text("The Input Field Is Empty"),
-                        actions: [TextButton(onPressed: () {
-                          Navigator.pop(context);
-                        }, child: Text("OK"))],
-                        );
-                      },);
-                    }
-                  // value.addtodo(data);
-                  }, child: Text("ADD",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),))
                 ],
               ),
             ),
