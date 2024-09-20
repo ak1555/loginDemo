@@ -12,17 +12,17 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<TodoS>(builder: (context, value, child) => Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.red,
+        backgroundColor: Colors.grey[300],
+        foregroundColor: Colors.black,
         title: Center(child: Container(
           height:45,
           width: 100,
           alignment: Alignment.center,
           decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Colors.red[100]
+        color: const Color.fromARGB(255, 185, 171, 172)
       ),
           child: Text(" Details ",style: TextStyle(),)),),
       ),
@@ -33,7 +33,7 @@ class _DetailsPageState extends State<DetailsPage> {
       padding: EdgeInsets.only(bottom: 50),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        color: Colors.lightBlue[200]
+        color: Colors.grey
       ),
       child: Column(
         children: [
@@ -68,7 +68,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 },);
               },
               leading: Text(index.toString()),
-              title: Center(child: Text(value.todolist[index].toString(),style: TextStyle(color: const Color.fromARGB(255, 240, 6, 6),
+              title: Center(child: Text(value.todolist[index].toString(),style: TextStyle(color: const Color.fromARGB(255, 97, 55, 55),
               fontSize: 20,),),),
               trailing: IconButton(onPressed: () {
                 
