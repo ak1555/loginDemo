@@ -58,7 +58,9 @@ void lsli(){
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 247, 247) ,
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 247, 247) ,
         title: Center(child: Text("ADD LIST",style: TextStyle(fontWeight: FontWeight.bold),),),
        actions: [  IconButton(onPressed: () {
           Navigator.pushNamed(context, "details");
@@ -73,6 +75,7 @@ void lsli(){
           width: 500,
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
+            color: Colors.white,
             border: Border.all(color: Colors.red, width: 0.5,style: BorderStyle.solid),
             borderRadius: BorderRadius.circular(15),         
           ),
@@ -91,6 +94,8 @@ void lsli(){
                     controller: c1,
                     decoration:
                      InputDecoration(
+                      fillColor: const Color.fromARGB(255, 255, 247, 247) ,
+                filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(style: BorderStyle.values.last,
                           width: .2,
@@ -122,6 +127,8 @@ SizedBox(height: 22,),
                   Expanded(child: TextField(
                     controller: c2,
                     decoration: InputDecoration(
+                           fillColor: const Color.fromARGB(255, 255, 247, 247) ,
+                filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(style: BorderStyle.values.last,
                           width: .2,
@@ -153,6 +160,8 @@ SizedBox(height: 22,),
                   Expanded(child: TextField(
                     controller: c3,
                     decoration:InputDecoration(
+                           fillColor: const Color.fromARGB(255, 255, 247, 247) ,
+                filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(style: BorderStyle.values.last,
                           width: .2,
@@ -191,6 +200,8 @@ Container(
                   Expanded(child: TextField(
                     controller: c4,
                     decoration: InputDecoration(
+                           fillColor: const Color.fromARGB(255, 255, 247, 247) ,
+                filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(style: BorderStyle.values.last,
                           width: .2,
@@ -223,6 +234,8 @@ SizedBox(height: 15,),
                   Expanded(child: TextField(
                     controller: c5,
                     decoration: InputDecoration(
+                           fillColor: const Color.fromARGB(255, 255, 247, 247) ,
+                filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(style: BorderStyle.values.last,
                           width: .2,
@@ -255,6 +268,8 @@ SizedBox(height: 15,),
                   Expanded(child: TextField(
                     controller: c6,
                     decoration: InputDecoration(
+                           fillColor: const Color.fromARGB(255, 255, 247, 247) ,
+                filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(style: BorderStyle.values.last,
                           width: .2,
@@ -278,7 +293,7 @@ SizedBox(height: 15,),
                   ))])),
           SizedBox(height: 90,),
               MaterialButton(
-                color: Color.fromARGB(255, 213, 128, 228),
+                color: const Color.fromARGB(255, 248, 69, 69),
                 padding: EdgeInsets.only(left: 40,right: 40,top: 20,bottom: 20),
                 shape: BeveledRectangleBorder(
                   
@@ -296,6 +311,7 @@ SizedBox(height: 15,),
                   // }
                 
               },child: Text("SUBMIT",style: TextStyle(
+                color: Colors.white,
                 fontWeight: FontWeight.bold,letterSpacing: 2,
                 shadows: [Shadow(color: Colors.black,blurRadius: 3,offset: Offset(2, 2))]
               ),),)
