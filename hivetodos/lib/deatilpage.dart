@@ -34,9 +34,9 @@ void callfuntion(){
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        padding: EdgeInsets.only(left: 25,right: 25,top: 15,bottom: 15),
+        padding: EdgeInsets.only(left: 28,right: 28,top: 15,bottom: 15),
         child: Container(
-          padding: EdgeInsets.only(left: 15,right: 15,bottom: 5,top: 28),
+          padding: EdgeInsets.only(left: 18,right: 18,bottom: 5,top: 28),
           // height: 50,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -49,7 +49,7 @@ void callfuntion(){
             itemBuilder: (context, index) {
             return Container(
               height: 170,
-              padding: EdgeInsets.only(top: 9,left: 7),
+              padding: EdgeInsets.only(top: 9,left: 9),
               margin: EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
                 
@@ -124,7 +124,7 @@ void callfuntion(){
 
 
                 SizedBox(width: 30,),
-                SizedBox(width: 15,),
+                // SizedBox(width: 15,),
                 
                 
                  Column(

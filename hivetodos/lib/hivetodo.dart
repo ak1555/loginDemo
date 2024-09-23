@@ -291,7 +291,7 @@ SizedBox(height: 15,),
                       
                       ),
                   ))])),
-          SizedBox(height: 90,),
+          SizedBox(height: 80,),
               MaterialButton(
                 color: const Color.fromARGB(255, 248, 69, 69),
                 padding: EdgeInsets.only(left: 40,right: 40,top: 20,bottom: 20),
