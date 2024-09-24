@@ -8,11 +8,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
 bool d_ontap= false;
 
-void show(){
-
-}
+TextEditingController note=TextEditingController();
+TextEditingController cash = TextEditingController();
+TextEditingController income = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,84 +24,87 @@ void show(){
         child: Column(
           children: [
 
-            SizedBox(height: 150,),
+            const SizedBox(height: 150,),
             // ========================================================= INCOME SECTION
 
-                Container(
+                SizedBox(
                   height: d_ontap ? 200 : 50,
                   child: TextButton(onPressed: () {
                                 setState(() {
                                   d_ontap=true;
                                 });
-                              }, child:d_ontap? Container(
+                              }, child:d_ontap? SizedBox(
                                 height: 200,
                                 child: Card(
                                   child: Column(children: [
-                                    SizedBox(height: 15,),
+                                    const SizedBox(height: 15,),
                                     Row(
                                       children: [
-                                        SizedBox(width: 25,),
-                                        Text("ENTER INCOME: "),
+                                        const SizedBox(width: 25,),
+                                        const Text("ENTER INCOME: "),
                                         Expanded(child: TextField(
+                                          controller: income,
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
-                                              contentPadding: EdgeInsets.only(left: 5),
+                                              contentPadding: const EdgeInsets.only(left: 5),
                             enabledBorder: OutlineInputBorder(
-                               borderSide: BorderSide(width: 1,color: const Color.fromARGB(255, 64, 2, 145)),
+                               borderSide: const BorderSide(width: 1,color: Color.fromARGB(255, 64, 2, 145)),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(width: 1,color: Colors.redAccent),
+                              borderSide: const BorderSide(width: 1,color: Colors.redAccent),
                               borderRadius: BorderRadius.circular(15),
                               
                             )
                                           ),
                                         )),
-                                         SizedBox(width: 15,),
+                                         const SizedBox(width: 15,),
                                       ],
                                     ),
-                                    SizedBox(height: 65,),
+                                    const SizedBox(height: 65,),
 
                                     Row(children: [
 
-                                       SizedBox(width: 105,),
+                                       const SizedBox(width: 105,),
 
                                            TextButton(
                                             style: TextButton.styleFrom(shape: BeveledRectangleBorder(
-                                              borderRadius: BorderRadius.circular(0),side: BorderSide(width: .1)
+                                              borderRadius: BorderRadius.circular(0),side: const BorderSide(width: .1)
                                             )),
                                             onPressed: () {
+                                              cash.clear();
                                             setState(() {
                                               d_ontap=false;
                                             });
                                       },
-                                       child: Text("CANCEL")),
+                                       child: const Text("CANCEL")),
 
-                                          SizedBox(width: 15,),
+                                          const SizedBox(width: 15,),
                                       TextButton(
                                         style: TextButton.styleFrom(
                                         shape: BeveledRectangleBorder(
-                                          borderRadius: BorderRadius.circular(0),side: BorderSide(width: .1)
+                                          borderRadius: BorderRadius.circular(0),side: const BorderSide(width: .1)
                                           )
                                         ),
                                         onPressed: () {
                                       }, 
-                                      child: Text("OK"))
+                                      child: const Text("OK"))
                                     ],)
                                   ],),
                                 ),
-                              ) : Text("INCOME")),
+                              ) : const Text("INCOME")),
                 ),
 
-                SizedBox(height: 25,),
+                const SizedBox(height: 25,),
                 // ==================================================== STATEMENT SECTION
             TextButton(onPressed: () {
-              showDialog(context: context, builder: (context) {
-                return AlertDialog(
+              // showDialog(context: context, builder: (context) {
+              //   return const AlertDialog(
 
-                );
-              },);
-            }, child: Text("STATEMENT")),
+              //   );
+              // },);
+              Navigator.pushNamed(context, "/statement");
+            }, child: const Text("STATEMENT")),
           ],
         )
       ),
@@ -108,7 +112,7 @@ void show(){
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Container(
@@ -118,7 +122,7 @@ void show(){
                 border: Border.all(width: 0),
                 borderRadius: BorderRadius.circular(15)
               ),
-              child: Column(
+              child:  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -141,13 +145,20 @@ void show(){
                   Row(children: [
                     SizedBox(width: 350,),
                     Text("LEFT :"),
-                    Text("500")
-                  ],)
+                    Text("500"),
+                  ],),
 
-
+                  SizedBox(height: 50,),
+                  // Container(
+                  //   height: 130,
+                  //   padding: EdgeInsets.all(1),
+                  //   width: double.infinity,
+                  //   // child: Image.asset("./images/blackexpenses.jpg",fit: BoxFit.fill,),
+                  // )
                 ],
               ),
-            )
+            ),
+            //  Image.asset("./images/redexpense.jpg",fit: BoxFit.fill,),
           ],
         ),
       ),
@@ -164,7 +175,7 @@ void show(){
              child: Container(
               height: 250,
               width: 300,
-              padding: EdgeInsets.all(15),
+              padding:  EdgeInsets.all(15),
               child: Column(
                 children: [
                   Container(
@@ -172,21 +183,22 @@ void show(){
                     alignment: Alignment.bottomCenter,
                   child: Row(
                     children: [
-                      Text("NOTE:",style: TextStyle(fontSize: 12),),
-                      SizedBox(width: 10,),
+                      const Text("NOTE:",style: TextStyle(fontSize: 12),),
+                      const SizedBox(width: 10,),
 
                       
                       Expanded(
                         child: TextField(
+                          controller: note,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 5),
+                            contentPadding: const EdgeInsets.only(left: 5),
                             enabledBorder: OutlineInputBorder(
-                               borderSide: BorderSide(width: 1,color: const Color.fromARGB(255, 64, 2, 145)),
+                               borderSide: const BorderSide(width: 1,color: Color.fromARGB(255, 64, 2, 145)),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(width: 1,color: Colors.redAccent),
+                              borderSide: const BorderSide(width: 1,color: Colors.redAccent),
                               borderRadius: BorderRadius.circular(15),
                               
                             )
@@ -196,45 +208,46 @@ void show(){
                     ],
                   ),),
 
-                  SizedBox(height: 25,),
+                  const SizedBox(height: 25,),
 
                      Container(
                     height: 40,
                     alignment: Alignment.bottomCenter,
                   child: Row(
                     children: [
-                      Text("EXPENSE:",style: TextStyle(fontSize: 12),),
-                      SizedBox(width: 5,),
+                      const Text("use(in bracket):",style: TextStyle(fontSize: 12),),
+                      const SizedBox(width: 5,),
 
                       
                       Expanded(
                         child: TextField(
+                          controller: cash,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 5),
+                            contentPadding: const EdgeInsets.only(left: 5),
                             enabledBorder: OutlineInputBorder(
-                               borderSide: BorderSide(width: 1,color: const Color.fromARGB(255, 64, 2, 145)),
+                               borderSide: const BorderSide(width: 1,color: Color.fromARGB(255, 64, 2, 145)),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(width: 1,color: Colors.redAccent),
+                              borderSide: const BorderSide(width: 1,color: Colors.redAccent),
                               borderRadius: BorderRadius.circular(15),
                               
                             )
                           ),
                         )
                         ),
-                        SizedBox(width: 19,)
+                        const SizedBox(width: 19,)
                     ],
                   ),),
 
-                    SizedBox(height: 50,),
-                    Row(children: [Text("BILL:"),
-                    SizedBox(width: 140,),
+                    const SizedBox(height: 50,),
+                    Row(children: [const Text("BILL:"),
+                    const SizedBox(width: 140,),
                     Container(height: 50,width: 75,decoration: BoxDecoration(
                       border: Border.all(color: const Color.fromARGB(255, 64, 2, 145)),
                       borderRadius: BorderRadius.circular(5)
-                    ),child: Icon(Icons.add_photo_alternate_outlined),)
+                    ),child: const Icon(Icons.add_photo_alternate_outlined),)
                     ],)
 
                 ],
@@ -246,15 +259,15 @@ void show(){
             actions: [
               TextButton(onPressed: () {
                 
-              }, child: Text("Cancel")),
-              SizedBox(width: 50,),
+              }, child: const Text("Cancel")),
+              const SizedBox(width: 50,),
               TextButton(onPressed: () {
                 
-              }, child: Text("save"))
+              }, child: const Text("save"))
             ],
           );
         },);
-      },child:  Icon(Icons.add,size: 35,),),
+      },child:  const Icon(Icons.add,size: 35,),),
     );
   }
 }

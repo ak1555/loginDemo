@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    MaterialApp(
-     home:  StateMent()
-    )
+     MaterialApp(
+     home:  HomePage(),
+     routes: {
+      "/statement":(context)=>StateMent()
+     },    )
   );
 }
