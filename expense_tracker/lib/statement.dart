@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class StateMent extends StatefulWidget {
-   StateMent({super.key});
+  StateMent({super.key});
 
   @override
   State<StateMent> createState() => _StateMentState();
@@ -9,11 +9,12 @@ class StateMent extends StatefulWidget {
 
 class _StateMentState extends State<StateMent> {
   bool todatButton = true;
-  bool monthButton =false;
+  bool monthButton = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent[200],
+      backgroundColor: const Color.fromARGB(255, 4, 0, 51),
+      //  Colors.lightBlueAccent[200],
       body: Container(
         child: Column(
           children: [
@@ -21,19 +22,21 @@ class _StateMentState extends State<StateMent> {
             Container(
               height: 70,
               width: double.infinity,
-              padding: EdgeInsets.only(left: 15,right: 15),
+              padding: EdgeInsets.only(left: 15, right: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.microwave_rounded),
+                  Icon(
+                    Icons.microwave_rounded,
+                    color: Colors.white,
+                  ),
                   Container(
-                    height: 33,
-                    width: 33,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.grey[50]
-                    ),
-                    child:  Icon(Icons.perm_identity_rounded))
+                      height: 33,
+                      width: 33,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.grey[50]),
+                      child: Icon(Icons.perm_identity_rounded))
                 ],
               ),
             ),
@@ -41,17 +44,32 @@ class _StateMentState extends State<StateMent> {
             Container(
               height: 150,
               width: double.infinity,
-              padding:  EdgeInsets.only(left: 60),
+              padding: EdgeInsets.only(left: 60),
               // color: Colors.red,
-              child:  Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("My budget:"),
+                  Text(
+                    "My budget:",
+                    style: TextStyle(color: Colors.white, fontSize: 28),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     children: [
-                      Image.asset(""),
-                      Text("RS:500"),
+                      Container(
+                          height: 23,
+                          width: 18,
+                          child: Image.asset(
+                            "./images/rupee.jpg",
+                            color: Colors.white,
+                          )),
+                      Text(
+                        " 500",
+                        style: TextStyle(color: Colors.white, fontSize: 23),
+                      ),
                     ],
                   )
                 ],
@@ -62,59 +80,90 @@ class _StateMentState extends State<StateMent> {
             Container(
               height: 665,
               width: double.infinity,
-              padding: EdgeInsets.only(top: 20,left: 15,right: 15),
-              decoration:  BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(50))
-                ,color: Colors.white
-              ),
+              padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
+                  color: Colors.white),
               child: Column(
                 children: [
                   // ========================================================== BUTTONS
                   Container(
-                    height:50 ,
+                    height: 50,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(100)
-                    ),
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(100)),
                     child: Row(
                       children: [
                         // -----------------textbutton 1
                         TextButton(
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.only(left: 55,right: 55,top: 20,bottom: 20),
-                            backgroundColor: todatButton ?Colors.black:Colors.grey[200]
-                          ),
-                          onPressed: () {
-                         setState(() {
-                           monthButton=!monthButton;
-                           todatButton=!todatButton;
-                         });
-                        }, child: Text("TODAY",style: TextStyle(
-                          color:  todatButton ?Colors.white:Colors.deepPurpleAccent[800]
-                        ),)),
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.only(
+                                    left: 55, right: 55, top: 20, bottom: 20),
+                                backgroundColor: todatButton
+                                    ? Colors.black
+                                    : Colors.grey[200]),
+                            onPressed: () {
+                              setState(() {
+                                monthButton = !monthButton;
+                                todatButton = !todatButton;
+                              });
+                            },
+                            child: Text(
+                              "TODAY",
+                              style: TextStyle(
+                                  color: todatButton
+                                      ? Colors.white
+                                      : Colors.deepPurpleAccent[800]),
+                            )),
 
                         // ----------text button 2
                         TextButton(
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.only(left: 55,right: 55,top: 20,bottom: 20),
-                            backgroundColor: monthButton ?Colors.black:Colors.grey[200]
-                          ),
-                          onPressed: () {
-                          setState(() {
-                            monthButton=!monthButton;
-                             todatButton=!todatButton;
-                          });
-                        }, child: Text("MONTH",style: TextStyle(
-                          color:  monthButton ?Colors.white:Colors.deepPurpleAccent[800]
-                        ),))
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.only(
+                                    left: 55, right: 55, top: 20, bottom: 20),
+                                backgroundColor: monthButton
+                                    ? Colors.black
+                                    : Colors.grey[200]),
+                            onPressed: () {
+                              setState(() {
+                                monthButton = !monthButton;
+                                todatButton = !todatButton;
+                              });
+                            },
+                            child: Text(
+                              "MONTH",
+                              style: TextStyle(
+                                  color: monthButton
+                                      ? Colors.white
+                                      : Colors.deepPurpleAccent[800]),
+                            ))
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    height: 510,
+                    width: double.infinity,
+                    color: Colors.amber,
+                  ),
+
+                  SizedBox(
+                    height: 10,
+                  ),
+
+                  Container(
+                    height: 55,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.black),
                   )
                 ],
               ),
             )
-
           ],
         ),
       ),
