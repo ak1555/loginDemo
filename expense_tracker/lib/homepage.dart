@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,11 +9,79 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool d_ontap = false;
 
   TextEditingController note = TextEditingController();
   TextEditingController cash = TextEditingController();
   TextEditingController income = TextEditingController();
+  // key 1=total income
+  //  key 2 = expenses
+  // key 3= balance amount
+
+  bool d_ontap = false;
+  List ls =[0];
+  List ls2=[0];
+  List <dynamic> expenselist = [];
+  final mybox= Hive.box('mybox');
+
+// ================================================== ADDINCOME
+  void addincome(){
+    int lsincome=ls[0];
+      String ii=income.text;
+      int inputincome=int.parse(ii);
+      int sum=inputincome+lsincome;
+    setState(() {
+      ls[0]=sum;
+    });
+    mybox.put(1, ls);
+    print(ls[0]);
+  }
+  // ================================================= SHOW BALANCE
+  void balance(){
+    List demolist=mybox.get(2);
+    List sum=[];
+    int ss;
+    int b=int.parse(mybox.get(3));
+    int totalamount=0;
+    int k=demolist.length;
+    for(int i=0;i<=k;i++){
+      // sum.add();
+      totalamount+=int.parse(demolist[i]["amount"]);
+      
+    }
+    ss=totalamount+b;
+     ls2[0]=ss;
+    mybox.put(3, ls2);
+
+  }
+// =================================================== SHOWINCOME
+void printincome(){
+  setState(() {
+    ls=mybox.get(1);
+    ls2=mybox.get(3);
+  });
+}
+// ====================================================== ENTER EXPENSES
+void addexpense(){
+var notes=note.text;
+var expens= cash.text;
+expenselist.add({
+  "note":notes,
+  "amount":cash.text
+});
+mybox.put(2, expenselist);
+}
+
+
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    printincome();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       Expanded(
                                           child: TextField(
-                                        controller: income,
+                                        controller:income,
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                             contentPadding:
@@ -103,12 +172,12 @@ class _HomePageState extends State<HomePage> {
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 65,
+                                    height: 55,
                                   ),
                                   Row(
                                     children: [
                                       const SizedBox(
-                                        width: 105,
+                                        width: 95,
                                       ),
                                       TextButton(
                                           style: TextButton.styleFrom(
@@ -136,10 +205,22 @@ class _HomePageState extends State<HomePage> {
                                                       BorderRadius.circular(0),
                                                   side: const BorderSide(
                                                       width: .1))),
-                                          onPressed: () {},
-                                          child: const Text("OK"))
+                                          onPressed: () {
+                                           
+                                           
+                                            setState(() {
+                                              
+                                               addincome();
+                                              d_ontap = false;
+                                               income.clear();
+                                            });
+                                            
+                                          },
+                                          child: const Text("OK")),
+                                          SizedBox(width: 15,)
                                     ],
-                                  )
+                                  ),
+                                  SizedBox(height: 10,)
                                 ],
                               ),
                             ),
@@ -191,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                         "INCOME:  ",
                         style: TextStyle(color: Colors.white, fontSize: 19),
                       ),
-                      Text("50000",
+                      Text(ls[0].toString(),
                           style: TextStyle(color: Colors.white, fontSize: 19))
                     ],
                   ),
@@ -211,7 +292,7 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     children: [
                       SizedBox(
-                        width: 300,
+                        width: 200,
                       ),
                       Text("LEFT :  ", style: TextStyle(color: Colors.white)),
                       Text("500", style: TextStyle(color: Colors.red)),
@@ -339,7 +420,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             const Text("BILL:"),
                             const SizedBox(
-                              width: 140,
+                              width: 85,
                             ),
                             Container(
                               height: 50,

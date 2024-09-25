@@ -78,7 +78,7 @@ class _StateMentState extends State<StateMent> {
             // ============================================================= LISTVIEW
 
             Container(
-              height: 665,
+              height: 560,
               width: double.infinity,
               padding: EdgeInsets.only(top: 20, left: 15, right: 15),
               decoration: BoxDecoration(
@@ -99,7 +99,7 @@ class _StateMentState extends State<StateMent> {
                         TextButton(
                             style: TextButton.styleFrom(
                                 padding: EdgeInsets.only(
-                                    left: 55, right: 55, top: 20, bottom: 20),
+                                    left: 55, right: 55, top: 10, bottom: 10),
                                 backgroundColor: todatButton
                                     ? Colors.black
                                     : Colors.grey[200]),
@@ -116,12 +116,12 @@ class _StateMentState extends State<StateMent> {
                                       ? Colors.white
                                       : Colors.deepPurpleAccent[800]),
                             )),
-
+                              SizedBox(width: 2,),
                         // ----------text button 2
                         TextButton(
                             style: TextButton.styleFrom(
                                 padding: EdgeInsets.only(
-                                    left: 55, right: 55, top: 20, bottom: 20),
+                                    left: 55, right: 55, top: 8, bottom: 8),
                                 backgroundColor: monthButton
                                     ? Colors.black
                                     : Colors.grey[200]),
@@ -145,7 +145,7 @@ class _StateMentState extends State<StateMent> {
                     height: 15,
                   ),
                   Container(
-                    height: 510,
+                    height: 400,
                     width: double.infinity,
                     color: Colors.amber,
                   ),
@@ -155,7 +155,7 @@ class _StateMentState extends State<StateMent> {
                   ),
 
                   Container(
-                    height: 55,
+                    height: 50,
                     width: double.infinity,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
