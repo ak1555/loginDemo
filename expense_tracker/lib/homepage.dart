@@ -62,13 +62,18 @@ class _HomePageState extends State<HomePage> {
   // }
 
   void balance(){
-     List sum=[];
+    // enter cancel for balance function
+     List<int> sum=[];
     List demolist=mybox.get(2);
      int k=demolist.length;
-     for(int i=0;i<k;i++){
-      String s=demolist[i]["amount"];
-        // int a=int.parse(s);
-        sum.add(s);
+    //  print(k);
+    int index=0;
+    for (int i in demolist){
+          // String s=demolist[index]["amount"];
+          String s=demolist[index]["amount"];
+        int a=int.parse(s);
+        sum.add(a);
+        index ++;
     }
     print(sum);
   }
@@ -87,7 +92,7 @@ void printincome(){
 }
 // ====================================================== ENTER EXPENSES
 void addexpense(){
-  List demo=[];
+  List<Map<dynamic,dynamic>> demo=[];
 var notes=note.text;
 var expens= cash.text;
 
@@ -95,13 +100,13 @@ try{
   demo=mybox.get(2);
 }catch(e){print(e);}
 
-expenselist.add({
+demo.add({
   "note":notes,
-  "amount": expens
+  "amount":expens.toString()
 });
-demo.add(expenselist);
+// demo.add(expenselist);
 mybox.put(2, demo);
-print(expenselist);
+// print(expenselist);
 }
 
 
@@ -533,7 +538,7 @@ print(expenselist);
                     foregroundColor: Colors.white
                     ),
                     onPressed: () {
-                    balance();
+                    // balance();
                   }, child: const Text("Cancel")),
                   const SizedBox(
                     width: 50,
@@ -544,6 +549,7 @@ print(expenselist);
                     ),
                     onPressed: () {
                     addexpense();
+                    balance();
                   }, child: const Text("save"))
                 ],
               );

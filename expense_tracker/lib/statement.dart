@@ -26,7 +26,8 @@ void additem(){
 
 
 void addexpense(){
-  List demo=[];
+  // print(items);
+    List<Map<dynamic,dynamic>> demo=[];
 var notes=note.text;
 var expens= cash.text;
 
@@ -34,13 +35,13 @@ try{
   demo=mybox.get(2);
 }catch(e){print(e);}
 
-expenselist.add({
+demo.add({
   "note":notes,
   "amount": expens
 });
-demo.add(expenselist);
+// demo.add(expenselist);
 mybox.put(2, demo);
-print(expenselist);
+// print(expenselist);
 }
 
 
@@ -173,6 +174,7 @@ print(expenselist);
                               setState(() {
                                 monthButton = !monthButton;
                                 todatButton = !todatButton;
+                                addexpense();
                                 showDialog(
             context: context,
             builder: (context) {
@@ -381,37 +383,40 @@ print(expenselist);
                   SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    height: 400,
-                    width: double.infinity,
-                    // color: Colors.amber,
-//                             ======================================= LISTVIEW.BUILDER
-                    child: ListView.builder(
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                      Container(
-                        height: 40,
-                        width:double.infinity,
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                          Row(children: [
-                            Container(height: 30,
-                            width: 33,
-                            decoration: BoxDecoration(
-                              border: Border.all(),
-                              color: Colors.grey[400]
-                            ),
-                            ),
-                            SizedBox(width: 25,),
-                            Text(items[index]["note"].toString(),style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),)
+                  Expanded(
+                    child: Container(
+                      height: 400,
+                      width: double.infinity,
+                      // color: Colors.amber,
+                    //                             ======================================= LISTVIEW.BUILDER
+                      child: ListView.builder(
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                       return Container(
+                          height: 40,
+                          width:double.infinity,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Row(children: [
+                              Container(height: 30,
+                              width: 30,
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(100)
+                              ),
+                              ),
+                              SizedBox(width: 25,),
+                              Text(items[index]["note"].toString(),style: TextStyle(fontSize: 22,color: Colors.black,fontWeight: FontWeight.bold),)
+                            ],),
+                    
+                             Text(items[index]["amount"],style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),)
                           ],),
-
-                           Text(items[index]["amount"].toString(),style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),)
-                        ],),
-                      );
-                    },),
+                        );
+                      },),
+                    ),
                   ),
 
                   SizedBox(
