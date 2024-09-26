@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
 
 // ================================================== ADDINCOME
   void addincome(){
+    // add income from the hive
     int lsincome=ls[0];
       String ii=income.text;
       int inputincome=int.parse(ii);
@@ -36,39 +37,71 @@ class _HomePageState extends State<HomePage> {
     print(ls[0]);
   }
   // ================================================= SHOW BALANCE
-  void balance(){
-    List demolist=mybox.get(2);
-    List sum=[];
-    int ss;
-    int b=int.parse(mybox.get(3));
-    int totalamount=0;
-    int k=demolist.length;
-    for(int i=0;i<=k;i++){
-      // sum.add();
-      totalamount+=int.parse(demolist[i]["amount"]);
-      
-    }
-    ss=totalamount+b;
-     ls2[0]=ss;
-    mybox.put(3, ls2);
+  // void balance(){
+  //   List demolist=mybox.get(2);
+  //   List sum=[];
+  //   int ss=0;
+  //   int b;
+  //   try{
+  //      b= int.parse(mybox.get(3));
+  //   }catch(e){
+  //     b=0;
+  //   }
+  //   int totalamount=0;
+  //   int k=demolist.length;
+  //   for(int i=0;i<k;i++){
+  //     String s=demolist[i]["amount"];
+  //     // int a=int.parse(s);
+  //     // sum.add(a);
+  //     ss=sum[i]+ss;
+  //   }
+  //    print(ss);
+  //   // totalamount=ss+b;
+  //    ls2[0]=ss;
+  //   mybox.put(3, ls2);
+  // }
 
+  void balance(){
+     List sum=[];
+    List demolist=mybox.get(2);
+     int k=demolist.length;
+     for(int i=0;i<k;i++){
+      String s=demolist[i]["amount"];
+        // int a=int.parse(s);
+        sum.add(s);
+    }
+    print(sum);
   }
-// =================================================== SHOWINCOME
+// =================================================== PRINTINCOME
 void printincome(){
   setState(() {
     ls=mybox.get(1);
-    ls2=mybox.get(3);
+    // try{
+     int p=mybox.get(3);
+        ls2[0]=p;
+    
+    // }catch(e){
+    //   print(e);
+    // }
   });
 }
 // ====================================================== ENTER EXPENSES
 void addexpense(){
+  List demo=[];
 var notes=note.text;
 var expens= cash.text;
+
+try{
+  demo=mybox.get(2);
+}catch(e){print(e);}
+
 expenselist.add({
   "note":notes,
-  "amount":cash.text
+  "amount": expens
 });
-mybox.put(2, expenselist);
+demo.add(expenselist);
+mybox.put(2, demo);
+print(expenselist);
 }
 
 
@@ -79,7 +112,8 @@ mybox.put(2, expenselist);
   void initState() {
     // TODO: implement initState
     super.initState();
-    printincome();
+    // printincome();
+    // balance();
   }
 
 
@@ -281,7 +315,7 @@ mybox.put(2, expenselist);
                     children: [
                       Text("EXPENSE:  ",
                           style: TextStyle(color: Colors.white, fontSize: 19)),
-                      Text("49500",
+                      Text(ls2[0].toString(),
                           style:
                               TextStyle(color: Colors.green[500], fontSize: 15))
                     ],
@@ -342,10 +376,27 @@ mybox.put(2, expenselist);
                           alignment: Alignment.bottomCenter,
                           child: Row(
                             children: [
-                              const Text(
-                                "NOTE:",
-                                style: TextStyle(fontSize: 12),
-                              ),
+                               Container(
+                                          height: 35,
+                                          width: 70,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(width: .1),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              color: Color.fromARGB(
+                                                  255, 4, 0, 51)),
+                                          child: Text(
+                                            "NOTE:",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                shadows: [
+                                                  Shadow(
+                                                      color: Colors.grey,
+                                                      blurRadius: 5,
+                                                      offset: Offset(2, 2))
+                                                ]),
+                                          )),
                               const SizedBox(
                                 width: 10,
                               ),
@@ -380,11 +431,28 @@ mybox.put(2, expenselist);
                           alignment: Alignment.bottomCenter,
                           child: Row(
                             children: [
-                              const Text(
-                                "use(in bracket):",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              const SizedBox(
+                                Container(
+                                          height: 35,
+                                          width: 70,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(width: .1),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              color: Color.fromARGB(
+                                                  255, 4, 0, 51)),
+                                          child: Text(
+                                            "USD:",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                shadows: [
+                                                  Shadow(
+                                                      color: Colors.grey,
+                                                      blurRadius: 5,
+                                                      offset: Offset(2, 2))
+                                                ]),
+                                          )),
+                               SizedBox(
                                 width: 5,
                               ),
                               Expanded(
@@ -418,7 +486,27 @@ mybox.put(2, expenselist);
                         ),
                         Row(
                           children: [
-                            const Text("BILL:"),
+                             Container(
+                                          height: 35,
+                                          width: 70,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(width: .1),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              color: Color.fromARGB(
+                                                  255, 4, 0, 51)),
+                                          child: Text(
+                                            "BILL:",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                shadows: [
+                                                  Shadow(
+                                                      color: Colors.grey,
+                                                      blurRadius: 5,
+                                                      offset: Offset(2, 2))
+                                                ]),
+                                          )),
                             const SizedBox(
                               width: 85,
                             ),
@@ -440,11 +528,23 @@ mybox.put(2, expenselist);
                   ),
                 ),
                 actions: [
-                  TextButton(onPressed: () {}, child: const Text("Cancel")),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                    foregroundColor: Colors.white
+                    ),
+                    onPressed: () {
+                    balance();
+                  }, child: const Text("Cancel")),
                   const SizedBox(
                     width: 50,
                   ),
-                  TextButton(onPressed: () {}, child: const Text("save"))
+                  TextButton(
+                    style: TextButton.styleFrom(
+                    foregroundColor: Colors.white
+                    ),
+                    onPressed: () {
+                    addexpense();
+                  }, child: const Text("save"))
                 ],
               );
             },
