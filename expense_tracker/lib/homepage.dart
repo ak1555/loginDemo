@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:lottie/lottie.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +21,8 @@ class _HomePageState extends State<HomePage> {
   bool d_ontap = false;
   List ls =[0];
   List ls2=[0];
+  List ls3=[0];
+  List leftincome=[0];
   List <dynamic> expenselist = [];
   final mybox= Hive.box('mybox');
 
@@ -37,65 +40,40 @@ class _HomePageState extends State<HomePage> {
     print(ls[0]);
   }
   // ================================================= SHOW BALANCE
-  // void balance(){
-  //   List demolist=mybox.get(2);
-  //   List sum=[];
-  //   int ss=0;
-  //   int b;
-  //   try{
-  //      b= int.parse(mybox.get(3));
-  //   }catch(e){
-  //     b=0;
-  //   }
-  //   int totalamount=0;
-  //   int k=demolist.length;
-  //   for(int i=0;i<k;i++){
-  //     String s=demolist[i]["amount"];
-  //     // int a=int.parse(s);
-  //     // sum.add(a);
-  //     ss=sum[i]+ss;
-  //   }
-  //    print(ss);
-  //   // totalamount=ss+b;
-  //    ls2[0]=ss;
-  //   mybox.put(3, ls2);
-  // }
 
   void balance(){
-    // enter cancel for balance function
-     List<int> sum=[];
-    List demolist=mybox.get(2);
-     int k=demolist.length;
-    //  print(k);
-    int index=0;
-    for (int i in demolist){
-          // String s=demolist[index]["amount"];
-          String s=demolist[index]["amount"];
-        int a=int.parse(s);
-        sum.add(a);
-        index ++;
-    }
-    print(sum);
+   if(mybox.get(3)!=null){
+    setState(() {
+      ls3[0]=mybox.get(3);
+    });
+   }else{
+     setState(() {
+      ls3[0]=0;
+    });
+   }
   }
 // =================================================== PRINTINCOME
 void printincome(){
   setState(() {
-    ls=mybox.get(1);
-    // try{
+    try{
+      ls[0]=mybox.get(1);
+    }catch(e){
+      ls[0]=0;
+    }
+    try{
      int p=mybox.get(3);
         ls2[0]=p;
-    
-    // }catch(e){
-    //   print(e);
-    // }
+
+    }catch(e){
+      ls2[0]=0;
+    }
   });
 }
 // ====================================================== ENTER EXPENSES
 void addexpense(){
-  List<Map<dynamic,dynamic>> demo=[];
+  List<dynamic> demo=[];
 var notes=note.text;
 var expens= cash.text;
-
 try{
   demo=mybox.get(2);
 }catch(e){print(e);}
@@ -105,8 +83,30 @@ demo.add({
   "amount":expens.toString()
 });
 // demo.add(expenselist);
-mybox.put(2, demo);
-// print(expenselist);
+mybox.put(2, demo.toList());
+print(demo);
+}
+// ==================================================== LEFT
+void toleft(){
+List one=[];
+List three=[];
+if(mybox.get(1)!=null){
+  if(mybox.get(3)!=null){
+    int a=int.parse(mybox.get(1));
+     int b=int.parse(mybox.get(3));
+     setState(() {
+       leftincome[0]=a-b;
+     });
+  }
+  else{
+     setState(() {
+       leftincome[0]=0;
+     });
+  }
+}else{
+  print("income null");
+}
+
 }
 
 
@@ -118,7 +118,8 @@ mybox.put(2, demo);
     // TODO: implement initState
     super.initState();
     // printincome();
-    // balance();
+    balance();
+    toleft();
   }
 
 
@@ -291,7 +292,7 @@ mybox.put(2, demo);
         child: Column(
           children: [
             Container(
-              height: 300,
+              height: 380,
               width: double.infinity,
               decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 4, 0, 51),
@@ -320,7 +321,7 @@ mybox.put(2, demo);
                     children: [
                       Text("EXPENSE:  ",
                           style: TextStyle(color: Colors.white, fontSize: 19)),
-                      Text(ls2[0].toString(),
+                      Text(ls3[0].toString(),
                           style:
                               TextStyle(color: Colors.green[500], fontSize: 15))
                     ],
@@ -334,12 +335,13 @@ mybox.put(2, demo);
                         width: 200,
                       ),
                       Text("LEFT :  ", style: TextStyle(color: Colors.white)),
-                      Text("500", style: TextStyle(color: Colors.red)),
+                      Text(leftincome[0].toString(), style: TextStyle(color: Colors.red)),
                     ],
                   ),
                   SizedBox(
                     height: 30,
                   ),
+                  Spacer(),
                   Container(
                     height: 130,
                     padding: EdgeInsets.all(1),
@@ -355,6 +357,14 @@ mybox.put(2, demo);
               ),
             ),
             //  Image.asset("./images/redexpense.jpg",fit: BoxFit.fill,),
+            Container(
+            width: double.infinity,
+            alignment: Alignment.bottomCenter,
+            child: Column(children: [
+              // Lottie.network(
+              //   "https://lottie.host/5bfc0c45-686a-4591-b69c-d0826acea492/ydZQzn9w9L.json",
+              //   fit: BoxFit.contain,height: 310,width: double.infinity)
+            ],),)
           ],
         ),
       ),
@@ -538,7 +548,10 @@ mybox.put(2, demo);
                     foregroundColor: Colors.white
                     ),
                     onPressed: () {
+                      
                     // balance();
+                  
+
                   }, child: const Text("Cancel")),
                   const SizedBox(
                     width: 50,
@@ -549,7 +562,24 @@ mybox.put(2, demo);
                     ),
                     onPressed: () {
                     addexpense();
-                    balance();
+                      List sum=[];
+                    int total=0;
+                    if(mybox.get(2)!=null){
+                      ls3=mybox.get(2);
+                      int s=ls3.length;
+                       for(int i=0;i<s;i++){
+                        total+= int.parse(ls3[i]["amount"]);
+
+                       }
+                       print(total);
+                       mybox.put(3, total);
+                      
+                    }else{
+                      print("no data in key3");
+                    }
+                    cash.clear();
+                    note.clear();
+                    // balance();
                   }, child: const Text("save"))
                 ],
               );

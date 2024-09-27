@@ -15,6 +15,7 @@ class _StateMentState extends State<StateMent> {
   bool todatButton = true;
   bool monthButton = false;
   List items=[];
+  List  leftincome=[0];
   final mybox=Hive.box('mybox');
 
 void additem(){
@@ -44,6 +45,27 @@ mybox.put(2, demo);
 // print(expenselist);
 }
 
+void toleft(){
+List one=[];
+List three=[];
+if(mybox.get(1)!=null){
+  if(mybox.get(3)!=null){
+    int a=int.parse(mybox.get(1));
+     int b=int.parse(mybox.get(3));
+     setState(() {
+       leftincome[0]=a-b;
+     });
+  }
+  else{
+     setState(() {
+       leftincome[0]=0;
+     });
+  }
+}else{
+  print("income null");
+}
+
+}
 
 
 
@@ -393,7 +415,7 @@ mybox.put(2, demo);
                         itemCount: items.length,
                         itemBuilder: (context, index) {
                        return Container(
-                          height: 40,
+                          height: 50,
                           width:double.infinity,
                           alignment: Alignment.center,
                           child: Row(
@@ -402,17 +424,23 @@ mybox.put(2, demo);
                             Row(children: [
                               Container(height: 30,
                               width: 30,
+                              padding: EdgeInsets.all(7.5),
                               decoration: BoxDecoration(
                                 border: Border.all(),
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(100)
                               ),
+                              child: Image.asset("./images/rupee.jpg",fit: BoxFit.contain,),
                               ),
                               SizedBox(width: 25,),
-                              Text(items[index]["note"].toString(),style: TextStyle(fontSize: 22,color: Colors.black,fontWeight: FontWeight.bold),)
+                              Text(items[index]["note"].toString(),style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.bold),)
                             ],),
                     
-                             Text(items[index]["amount"],style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),)
+                             Container(
+                              width: 70,
+                              alignment: Alignment.centerLeft,
+                              child: Text(items[index]["amount"],style: TextStyle(
+                                fontSize: 18,fontWeight: FontWeight.bold,color: Colors.red),))
                           ],),
                         );
                       },),
