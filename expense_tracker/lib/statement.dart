@@ -454,9 +454,25 @@ if(mybox.get(1)!=null){
                   Container(
                     height: 50,
                     width: double.infinity,
+                    padding: EdgeInsets.only(left: 15,right: 15),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                         color: Colors.black),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(onPressed: () {
+                              
+                            }, icon: Icon(Icons.list_alt_outlined,color: Colors.white,)),
+                           
+                            IconButton(onPressed: () {
+                            //  List l1=[0];
+                            //  List l2=[0];
+                            //  List l3=[0];
+                            //  mybox.put(1, l1); 
+                            //  mybox.put(2, l1); 
+                            //  mybox.put(3, l1); 
+                            }, icon: Icon(Icons.refresh,color: Colors.white,))
+                        ],),
                   )
                 ],
               ),

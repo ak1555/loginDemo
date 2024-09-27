@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   List ls2=[0];
   List ls3=[0];
   List leftincome=[0];
+  int b=0;
   List <dynamic> expenselist = [];
   final mybox= Hive.box('mybox');
 
@@ -55,19 +56,29 @@ class _HomePageState extends State<HomePage> {
 // =================================================== PRINTINCOME
 void printincome(){
   setState(() {
-    try{
-      ls[0]=mybox.get(1);
-    }catch(e){
-      ls[0]=0;
-    }
-    try{
-     int p=mybox.get(3);
-        ls2[0]=p;
+     if(mybox.get(1)!=null){
+      List p=mybox.get(1);
+        ls[0]=p[0];
+  }
+  else{
+    print("Mybob 3 empty");
+  }
+  //   try{
+  //    int p=mybox.get(3);
+  //       ls2[0]=p;
 
-    }catch(e){
-      ls2[0]=0;
-    }
-  });
+  //   }catch(e){
+  //     ls2[0]=0;
+  //   }
+ 
+  if(mybox.get(3)!=null){
+      int p=mybox.get(3);
+        ls2[0]=p;
+  }
+  else{
+    print("Mybox 3 empty");
+  }
+   });
 }
 // ====================================================== ENTER EXPENSES
 void addexpense(){
@@ -88,24 +99,26 @@ print(demo);
 }
 // ==================================================== LEFT
 void toleft(){
-List one=[];
-List three=[];
+  try{
+List one=[0];
+List<dynamic> three=[0];
 if(mybox.get(1)!=null){
-  if(mybox.get(3)!=null){
-    int a=int.parse(mybox.get(1));
-     int b=int.parse(mybox.get(3));
+    List oone=mybox.get(1);
+    List tthree=mybox.get(3);
+    //  int a=int.parse(one[0]);
+    //  int b=int.parse(three[0]);
+      // b=int.parse(mybox.get(3));
+    //  int x=a+b;
      setState(() {
-       leftincome[0]=a-b;
+      //  leftincome[0]=x;
      });
-  }
-  else{
-     setState(() {
-       leftincome[0]=0;
-     });
-  }
+
 }else{
+   leftincome[0]=0;
   print("income null");
 }
+
+  }catch(e){print(e);}
 
 }
 
@@ -119,7 +132,7 @@ if(mybox.get(1)!=null){
     super.initState();
     // printincome();
     balance();
-    toleft();
+    // toleft();
   }
 
 
@@ -129,7 +142,7 @@ if(mybox.get(1)!=null){
       // backgroundColor: const Color.fromARGB(255, 231, 231, 255),
       appBar: AppBar(),
       drawer: Drawer(
-          backgroundColor: Colors.blue[200],
+          backgroundColor: const Color.fromARGB(255, 51, 62, 167),
           child: Column(
             children: [
               const SizedBox(
@@ -265,7 +278,7 @@ if(mybox.get(1)!=null){
                               ),
                             ),
                           )
-                        : const Text("INCOME")),
+                        : const Text("INCOME",style: TextStyle(color: Colors.white),)),
               ),
 
               const SizedBox(
@@ -281,7 +294,7 @@ if(mybox.get(1)!=null){
                     // },);
                     Navigator.pushNamed(context, "/statement");
                   },
-                  child: const Text("STATEMENT")),
+                  child: const Text("STATEMENT",style: TextStyle(color: Colors.white))),
             ],
           )),
       // =============================================================== BODY
@@ -370,7 +383,7 @@ if(mybox.get(1)!=null){
       ),
       // =========================================================== FLOATINGACTION BUTTON
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
+        backgroundColor:  Color.fromARGB(255, 4, 0, 51),
         foregroundColor: Colors.white,
         onPressed: () {
           showDialog(
@@ -571,11 +584,13 @@ if(mybox.get(1)!=null){
                         total+= int.parse(ls3[i]["amount"]);
 
                        }
+                       List m=[0];
+                       m[0]=total;
                        print(total);
-                       mybox.put(3, total);
+                       mybox.put(3, m.toString());
                       
                     }else{
-                      print("no data in key3");
+                      print("no data in key2");
                     }
                     cash.clear();
                     note.clear();
