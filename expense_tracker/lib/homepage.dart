@@ -1,3 +1,6 @@
+import 'dart:async';
+// import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
@@ -18,11 +21,13 @@ class _HomePageState extends State<HomePage> {
   //  key 2 = expenses
   // key 3= balance amount
 
+Timer? _timer;
   bool d_ontap = false;
   List ls =[0];
   List ls2=[0];
   List ls3=[0];
   List leftincome=[0];
+  List items=[];
   int b=0;
   List <dynamic> expenselist = [];
   final mybox= Hive.box('mybox');
@@ -45,7 +50,7 @@ class _HomePageState extends State<HomePage> {
   void balance(){
    if(mybox.get(3)!=null){
     setState(() {
-      ls3[0]=mybox.get(3);
+      ls3=mybox.get(3);
     });
    }else{
      setState(() {
@@ -85,17 +90,18 @@ void addexpense(){
   List<dynamic> demo=[];
 var notes=note.text;
 var expens= cash.text;
+var d= DateTime.now();
 try{
   demo=mybox.get(2);
 }catch(e){print(e);}
 
 demo.add({
   "note":notes,
-  "amount":expens.toString()
+  "amount":expens.toString(),
 });
-// demo.add(expenselist);
-mybox.put(2, demo.toList());
+mybox.put(2, demo);
 print(demo);
+// balance();
 }
 // ==================================================== LEFT
 void toleft(){
@@ -121,6 +127,14 @@ if(mybox.get(1)!=null){
   }catch(e){print(e);}
 
 }
+// ===========================SHOW
+void show(){
+if(mybox.get(2) !=null){
+setState(() {
+  items=mybox.get(2);
+});
+}
+}
 
 
 
@@ -133,15 +147,19 @@ if(mybox.get(1)!=null){
     // printincome();
     balance();
     // toleft();
+    show();
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 231, 231, 255),
-      appBar: AppBar(),
+      backgroundColor: Colors.amber[200],
+      appBar: AppBar(backgroundColor:  Colors.amber[200],),
       drawer: Drawer(
+        semanticLabel:String.fromCharCode(DateTime.daysPerWeek) ,
+        surfaceTintColor: const Color.fromARGB(255, 224, 136, 136),
+        clipBehavior: Clip.none,
           backgroundColor: const Color.fromARGB(255, 51, 62, 167),
           child: Column(
             children: [
@@ -318,22 +336,28 @@ if(mybox.get(1)!=null){
                   SizedBox(
                     height: 15,
                   ),
+                   SizedBox(height: 20,),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      SizedBox(width: 15,),
                       Text(
                         "INCOME:  ",
-                        style: TextStyle(color: Colors.white, fontSize: 19),
+                        style: TextStyle(color: Colors.white, fontSize: 22),
                       ),
+                       SizedBox(width: 25,),
                       Text(ls[0].toString(),
-                          style: TextStyle(color: Colors.white, fontSize: 19))
+                          style: TextStyle(color: Colors.white, fontSize: 20))
                     ],
                   ),
+                  SizedBox(height: 10,),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                       SizedBox(width: 15,),
                       Text("EXPENSE:  ",
-                          style: TextStyle(color: Colors.white, fontSize: 19)),
+                          style: TextStyle(color: Colors.white, fontSize: 22)),
+                           SizedBox(width: 25,),
                       Text(ls3[0].toString(),
                           style:
                               TextStyle(color: Colors.green[500], fontSize: 15))
@@ -342,42 +366,84 @@ if(mybox.get(1)!=null){
                   SizedBox(
                     height: 50,
                   ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 200,
-                      ),
-                      Text("LEFT :  ", style: TextStyle(color: Colors.white)),
-                      Text(leftincome[0].toString(), style: TextStyle(color: Colors.red)),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     SizedBox(
+                  //       width: 200,
+                  //     ),
+                  //     Text("LEFT :  ", style: TextStyle(color: Colors.white)),
+                  //     Text(leftincome[0].toString(), style: TextStyle(color: Colors.red)),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 30,
                   ),
                   Spacer(),
                   Container(
-                    height: 130,
-                    padding: EdgeInsets.all(1),
+                    height: 100,
+                    padding: EdgeInsets.only(left: 150),
                     width: double.infinity,
-                    child: Image.asset(
-                      "./images/blackexpenses.jpg",
-                      fit: BoxFit.fill,
-                      color: const Color.fromARGB(255, 4, 0, 51),
-                      colorBlendMode: BlendMode.screen,
-                    ),
+                    // child: Image.asset(
+                    //   "./images/blackexpenses.jpg",
+                    //   fit: BoxFit.fill,
+                    //   color: const Color.fromARGB(255, 4, 0, 51),
+                    //   colorBlendMode: BlendMode.screen,
+                    // ),
+                    child:  Lottie.network(
+                "https://lottie.host/5bfc0c45-686a-4591-b69c-d0826acea492/ydZQzn9w9L.json",
+                fit: BoxFit.contain,width: double.infinity),
                   )
                 ],
               ),
             ),
             //  Image.asset("./images/redexpense.jpg",fit: BoxFit.fill,),
+            SizedBox(height: 8,),
+           Container(
+            height: 21.5,
+            alignment: Alignment.topCenter,
+            child: Text("RECENTS",style: TextStyle(color: Colors.black,
+            fontWeight: FontWeight.bold,fontSize: 20),),
+           ),
             Container(
+            height: 350,
             width: double.infinity,
-            alignment: Alignment.bottomCenter,
-            child: Column(children: [
-              // Lottie.network(
-              //   "https://lottie.host/5bfc0c45-686a-4591-b69c-d0826acea492/ydZQzn9w9L.json",
-              //   fit: BoxFit.contain,height: 310,width: double.infinity)
-            ],),)
+            padding: EdgeInsets.only(left: 15,right: 15),
+            // alignment: Alignment.bottomCenter,
+            // color: Colors.black,
+             child: ListView.builder(
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                       return Container(
+                          height: 50,
+                          width:double.infinity,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Row(children: [
+                              // Container(height: 30,
+                              // width: 30,
+                              // padding: EdgeInsets.all(7.5),
+                              // decoration: BoxDecoration(
+                              //   border: Border.all(),
+                              //   color: Colors.grey[300],
+                              //   borderRadius: BorderRadius.circular(100)
+                              // ),
+                              // child: Image.asset("./images/rupee.jpg",fit: BoxFit.contain,),
+                              // ),
+                              SizedBox(width: 25,),
+                              Text(items[index]["note"].toString(),style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.bold),)
+                            ],),
+                    
+                             Container(
+                              width: 70,
+                              alignment: Alignment.centerLeft,
+                              child: Text(items[index]["amount"],style: TextStyle(
+                                fontSize: 18,fontWeight: FontWeight.bold,color: Colors.red),))
+                          ],),
+                        );
+                      },),
+            )
           ],
         ),
       ),
@@ -576,25 +642,26 @@ if(mybox.get(1)!=null){
                     onPressed: () {
                     addexpense();
                       List sum=[];
+                      List ls33=[];
                     int total=0;
                     if(mybox.get(2)!=null){
-                      ls3=mybox.get(2);
-                      int s=ls3.length;
+                      ls33=mybox.get(2);
+                      int s=ls33.length;
                        for(int i=0;i<s;i++){
-                        total+= int.parse(ls3[i]["amount"]);
+                        total+= int.parse(ls33[i]["amount"]);
 
                        }
                        List m=[0];
                        m[0]=total;
                        print(total);
-                       mybox.put(3, m.toString());
+                       mybox.put(3, m);
                       
                     }else{
                       print("no data in key2");
                     }
                     cash.clear();
                     note.clear();
-                    // balance();
+                    balance();
                   }, child: const Text("save"))
                 ],
               );

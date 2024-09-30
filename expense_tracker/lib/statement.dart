@@ -12,6 +12,7 @@ class _StateMentState extends State<StateMent> {
     TextEditingController note = TextEditingController();
   TextEditingController cash = TextEditingController();
     List <dynamic> expenselist = [];
+    List ls3=[0];
   bool todatButton = true;
   bool monthButton = false;
   List items=[];
@@ -45,28 +46,18 @@ mybox.put(2, demo);
 // print(expenselist);
 }
 
-void toleft(){
-List one=[];
-List three=[];
-if(mybox.get(1)!=null){
-  if(mybox.get(3)!=null){
-    int a=int.parse(mybox.get(1));
-     int b=int.parse(mybox.get(3));
-     setState(() {
-       leftincome[0]=a-b;
-     });
-  }
-  else{
-     setState(() {
-       leftincome[0]=0;
-     });
-  }
-}else{
-  print("income null");
-}
 
-}
-
+void balance(){
+   if(mybox.get(3)!=null){
+    setState(() {
+      ls3=mybox.get(3);
+    });
+   }else{
+     setState(() {
+      ls3[0]=0;
+    });
+   }
+  }
 
 
 @override
@@ -74,6 +65,7 @@ if(mybox.get(1)!=null){
     // TODO: implement initState
     super.initState();
     additem();
+    balance();
   }
 
   @override
@@ -133,7 +125,7 @@ if(mybox.get(1)!=null){
                             color: Colors.white,
                           )),
                       Text(
-                        " 500",
+                        ls3[0].toString(),
                         style: TextStyle(color: Colors.white, fontSize: 23),
                       ),
                     ],
@@ -149,7 +141,7 @@ if(mybox.get(1)!=null){
               padding: EdgeInsets.only(top: 20, left: 15, right: 15),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
-                  color: Colors.white),
+                  color: Colors.amber[200]),
               child: Column(
                 children: [
                   // ========================================================== BUTTONS
@@ -157,7 +149,7 @@ if(mybox.get(1)!=null){
                     height: 50,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: const Color.fromARGB(255, 196, 181, 136),
                         borderRadius: BorderRadius.circular(100)),
                     child: Row(
                       children: [
@@ -168,12 +160,12 @@ if(mybox.get(1)!=null){
                                     left: 55, right: 55, top: 10, bottom: 10),
                                 backgroundColor: todatButton
                                     ? Colors.black
-                                    : Colors.grey[200]),
+                                    :  const Color.fromARGB(255, 196, 181, 136)),
                             onPressed: () {
                               setState(() {
                                 monthButton = !monthButton;
                                 todatButton = !todatButton;
-                                additem();
+                                // additem();
                               });
                             },
                             child: Text(
@@ -191,12 +183,12 @@ if(mybox.get(1)!=null){
                                     left: 55, right: 55, top: 8, bottom: 8),
                                 backgroundColor: monthButton
                                     ? Colors.black
-                                    : Colors.grey[200]),
+                                    :  const Color.fromARGB(255, 196, 181, 136)),
                             onPressed: () {
                               setState(() {
                                 monthButton = !monthButton;
                                 todatButton = !todatButton;
-                                addexpense();
+                                // addexpense();
                                 showDialog(
             context: context,
             builder: (context) {
